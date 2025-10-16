@@ -47,21 +47,44 @@ npm install
 npm run dev
 ```
 
-### 3. Environment Variables
+### 3. Environment Variables (Optional)
 
-The Supabase credentials are currently hardcoded in `supabase-client.js` for simplicity. In production, you should use environment variables:
+The project works out-of-the-box with default credentials embedded in `config.js`. For custom configurations or different Supabase projects:
 
-**Current Setup:**
-- Supabase URL: `https://zoxjvuafzkymgxmsluif.supabase.co`
-- Anon Key: Embedded in `supabase-client.js`
+**Option 1: Local Development Override**
 
-**For Production Enhancement:**
-Create a `.env.local` file (already ignored by git):
-```env
-SUPABASE_URL=your_supabase_url
-SUPABASE_ANON_KEY=your_supabase_anon_key
-ADMIN_KEY=your_32_character_admin_key
+Create an `env.js` file in the root directory (gitignored):
+
+```javascript
+// env.js
+window.ENV = {
+    SUPABASE_URL: 'https://your-project.supabase.co',
+    SUPABASE_ANON_KEY: 'your-supabase-anon-key',
+    ADMIN_KEY: 'your-32-character-admin-key'
+};
 ```
+
+A template is provided in `env.js.example`.
+
+**Option 2: Modify config.js Directly**
+
+Edit the default values in `config.js`:
+
+```javascript
+const config = {
+    supabase: {
+        url: 'https://your-project.supabase.co',
+        anonKey: 'your-anon-key'
+    },
+    admin: {
+        key: 'your-admin-key'
+    }
+};
+```
+
+**Default Configuration:**
+- Supabase URL: `https://zoxjvuafzkymgxmsluif.supabase.co`
+- Admin Key: `12345678901234567890123456789012`
 
 ## 🌐 Deployment to Vercel
 

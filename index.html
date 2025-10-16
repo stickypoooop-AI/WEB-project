@@ -492,6 +492,16 @@
 
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Optional Environment Variables (will be ignored if not found) -->
+    <script>
+        // Try to load env.js if it exists (for local development)
+        const envScript = document.createElement('script');
+        envScript.src = 'env.js';
+        envScript.onerror = () => console.log('No env.js found, using default config');
+        document.head.appendChild(envScript);
+    </script>
+    <!-- Configuration (must load after env.js attempt) -->
+    <script src="config.js"></script>
     <!-- Supabase Client Configuration -->
     <script src="supabase-client.js"></script>
     <!-- Main Application Script -->

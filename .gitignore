@@ -1,6 +1,7 @@
 # Environment variables
 .env.local
 .env
+env.js
 
 # Dependencies
 node_modules/

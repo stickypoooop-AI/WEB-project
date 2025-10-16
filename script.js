@@ -1,5 +1,5 @@
-// Admin Key (In production, this would be validated by backend)
-const ADMIN_KEY = '12345678901234567890123456789012';
+// Admin Key (reads from config.js which supports environment variables)
+const ADMIN_KEY = window.APP_CONFIG.admin.key;
 
 // Session Management
 const ADMIN_SESSION_KEY = 'admin_authenticated';

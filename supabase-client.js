@@ -1,9 +1,9 @@
 // Supabase Client Configuration
-// NOTE: In production, these values should come from environment variables
-// For now, they are hardcoded for Vercel deployment (will be replaced by env vars)
+// Reads configuration from config.js which supports environment variables
 
-const SUPABASE_URL = 'https://zoxjvuafzkymgxmsluif.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpveGp2dWFmemt5bWd4bXNsdWlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk5NzY5NDMsImV4cCI6MjA3NTU1Mjk0M30.csyxXbV6IxuP8v4I-zi7TeTw1qTI2HDJU52U84K7Tas';
+// Get configuration from global config
+const SUPABASE_URL = window.APP_CONFIG.supabase.url;
+const SUPABASE_ANON_KEY = window.APP_CONFIG.supabase.anonKey;
 
 // Initialize Supabase client
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
