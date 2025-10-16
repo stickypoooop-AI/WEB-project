@@ -813,6 +813,7 @@ function openProductForm(productId = null) {
     const title = document.getElementById('productFormTitle');
 
     form.reset();
+    removeSelectedImage(); // Clear image upload state
 
     if (productId) {
         const product = products.find(p => p.id === productId);
@@ -825,12 +826,21 @@ function openProductForm(productId = null) {
             document.getElementById('productFinish').value = product.finish;
             document.getElementById('productPrice').value = product.price;
             document.getElementById('productSize').value = product.size;
-            document.getElementById('productImage').value = product.image;
             document.getElementById('productDescription').value = product.description;
+            document.getElementById('productImageUrl').value = product.image;
+
+            // Store current image URL
+            currentImageUrl = product.image;
+
+            // Show existing image preview
+            document.getElementById('previewImg').src = product.image;
+            document.getElementById('imagePreview').style.display = 'block';
+            document.getElementById('imageFileName').textContent = 'Current image (click Choose Image to change)';
         }
     } else {
         title.textContent = 'Add New Product';
         document.getElementById('productId').value = '';
+        currentImageUrl = null;
     }
 
     modal.classList.add('active');
@@ -843,24 +853,48 @@ function closeProductForm() {
 async function saveProduct() {
     const form = document.getElementById('productForm');
 
+    // Validate required fields
     if (!form.checkValidity()) {
         form.reportValidity();
         return;
     }
 
+    // Check if image is provided (either file or existing URL)
+    if (!selectedImageFile && !currentImageUrl) {
+        alert('Please select a product image');
+        return;
+    }
+
     const productId = document.getElementById('productId').value;
-    const productData = {
-        name: document.getElementById('productName').value,
-        category: document.getElementById('productCategory').value,
-        material: document.getElementById('productMaterial').value,
-        finish: document.getElementById('productFinish').value,
-        price: parseFloat(document.getElementById('productPrice').value),
-        size: document.getElementById('productSize').value,
-        image: document.getElementById('productImage').value,
-        description: document.getElementById('productDescription').value
-    };
+    let imageUrl = currentImageUrl;
 
     try {
+        // Upload new image if selected
+        if (selectedImageFile) {
+            // Show uploading message
+            const saveBtn = document.getElementById('saveProduct');
+            const originalText = saveBtn.textContent;
+            saveBtn.textContent = 'Uploading image...';
+            saveBtn.disabled = true;
+
+            // Upload to Supabase Storage
+            imageUrl = await db.storage.uploadImage(selectedImageFile);
+
+            saveBtn.textContent = originalText;
+            saveBtn.disabled = false;
+        }
+
+        const productData = {
+            name: document.getElementById('productName').value,
+            category: document.getElementById('productCategory').value,
+            material: document.getElementById('productMaterial').value,
+            finish: document.getElementById('productFinish').value,
+            price: parseFloat(document.getElementById('productPrice').value),
+            size: document.getElementById('productSize').value,
+            image: imageUrl,
+            description: document.getElementById('productDescription').value
+        };
+
         if (productId) {
             // Edit existing product in Supabase
             await db.products.update(productId, productData);
@@ -873,9 +907,18 @@ async function saveProduct() {
         await loadProductsFromDB();
         renderAdminProducts();
         closeProductForm();
+
+        // Reset image upload state
+        selectedImageFile = null;
+        currentImageUrl = null;
     } catch (error) {
         console.error('Error saving product:', error);
-        alert('Failed to save product. Please try again.');
+        alert('Failed to save product. Please try again.\nError: ' + error.message);
+
+        // Re-enable button if disabled
+        const saveBtn = document.getElementById('saveProduct');
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Product';
     }
 }
 
@@ -896,6 +939,10 @@ async function deleteProduct(productId) {
         }
     }
 }
+
+// Image upload state
+let selectedImageFile = null;
+let currentImageUrl = null;
 
 // Initialize Admin Event Listeners
 function initializeAdminListeners() {
@@ -931,6 +978,58 @@ function initializeAdminListeners() {
     document.getElementById('closeProductForm').addEventListener('click', closeProductForm);
     document.getElementById('cancelProductForm').addEventListener('click', closeProductForm);
     document.getElementById('saveProduct').addEventListener('click', saveProduct);
+
+    // Image upload handlers
+    document.getElementById('selectImageBtn').addEventListener('click', () => {
+        document.getElementById('productImageFile').click();
+    });
+
+    document.getElementById('productImageFile').addEventListener('change', handleImageSelect);
+    document.getElementById('removeImageBtn').addEventListener('click', removeSelectedImage);
+}
+
+// Image upload functions
+function handleImageSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Validate file type
+    const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
+    if (!validTypes.includes(file.type)) {
+        alert('Invalid file type. Please select a PNG, JPG, JPEG, or WebP image.');
+        event.target.value = '';
+        return;
+    }
+
+    // Validate file size (20MB = 20 * 1024 * 1024 bytes)
+    const maxSize = 20 * 1024 * 1024;
+    if (file.size > maxSize) {
+        alert('File size exceeds 20MB. Please select a smaller image.');
+        event.target.value = '';
+        return;
+    }
+
+    // Store the file
+    selectedImageFile = file;
+
+    // Update file name display
+    document.getElementById('imageFileName').textContent = file.name;
+
+    // Show preview
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        document.getElementById('previewImg').src = e.target.result;
+        document.getElementById('imagePreview').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+}
+
+function removeSelectedImage() {
+    selectedImageFile = null;
+    document.getElementById('productImageFile').value = '';
+    document.getElementById('imageFileName').textContent = '';
+    document.getElementById('imagePreview').style.display = 'none';
+    document.getElementById('previewImg').src = '';
 }
 
 // Expose functions to global scope for onclick handlers

@@ -437,8 +437,23 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Image URL *</label>
-                        <input type="url" id="productImage" placeholder="https://..." required>
+                        <label>Product Image *</label>
+                        <div class="image-upload-container">
+                            <input type="file" id="productImageFile" accept="image/png,image/jpeg,image/jpg,image/webp" style="display: none;">
+                            <button type="button" class="btn btn-secondary" id="selectImageBtn">
+                                <i class="fas fa-upload"></i> Choose Image
+                            </button>
+                            <span id="imageFileName" style="margin-left: 10px; color: var(--text-gray);"></span>
+                            <div id="imagePreview" style="margin-top: 10px; display: none;">
+                                <img id="previewImg" style="max-width: 200px; max-height: 200px; border: 1px solid var(--border-color); border-radius: 4px;" alt="Preview">
+                                <button type="button" class="btn btn-danger btn-small" id="removeImageBtn" style="display: block; margin-top: 5px;">
+                                    <i class="fas fa-times"></i> Remove Image
+                                </button>
+                            </div>
+                            <small style="display: block; margin-top: 5px; color: var(--text-gray);">
+                                Supported formats: PNG, JPG, JPEG, WebP (Max 20MB)
+                            </small>
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -447,6 +462,7 @@
                     </div>
 
                     <input type="hidden" id="productId">
+                    <input type="hidden" id="productImageUrl">
                 </form>
             </div>
             <div class="modal-footer">
