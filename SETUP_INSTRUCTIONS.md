@@ -22,6 +22,14 @@ You **MUST** complete these steps in your Supabase Dashboard for the website to 
 
 This will fix the permission issues that prevented products from being added.
 
+### Option C: If enquiry submission is failing ("Failed to submit enquiry")
+
+1. Go to Supabase Dashboard → SQL Editor
+2. Copy the entire contents of `supabase_enquiries_policies.sql`
+3. Paste and Run
+
+This will fix the permission issues that prevent customers from submitting enquiries.
+
 ---
 
 ## Step 2: Create Storage Bucket (REQUIRED)
@@ -155,6 +163,14 @@ After completing the setup, test these features:
 1. Check file is under 20MB
 2. Check file format (PNG, JPG, JPEG, WebP only)
 3. Verify upload policies exist on bucket
+
+### Problem: "Failed to submit enquiry"
+
+**Solutions**:
+1. Run `supabase_enquiries_policies.sql` in Supabase SQL Editor (Step 1, Option C)
+2. Check browser console for specific error messages
+3. Verify enquiries table exists in database
+4. Check RLS policies for enquiries table are configured correctly
 
 ---
 
