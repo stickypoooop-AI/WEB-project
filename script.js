@@ -689,8 +689,40 @@ async function submitEnquiry() {
     };
 
     try {
-        // Save enquiry to Supabase
+        // Save enquiry to Supabase database
         await db.enquiries.create(enquiryData);
+
+        // Prepare email template parameters
+        const productsListForEmail = cart.map(item =>
+            `${item.name}\n  - 数量/Quantity: ${item.quantity}\n  - 单价/Unit Price: $${item.price.toFixed(2)}\n  - 小计/Subtotal: $${(item.price * item.quantity).toFixed(2)}\n  - 规格/Specs: ${item.size} | ${formatMaterial(item.material)} | ${formatFinish(item.finish)}`
+        ).join('\n\n');
+
+        const emailParams = {
+            customer_name: name,
+            company_name: document.getElementById('companyName').value || 'N/A',
+            customer_email: email,
+            customer_phone: phone,
+            customer_address: document.getElementById('customerAddress').value || 'N/A',
+            products_list: productsListForEmail,
+            notes: document.getElementById('additionalNotes').value || 'None',
+            submission_time: new Date().toLocaleString('en-US', {
+                timeZone: 'Asia/Shanghai',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            })
+        };
+
+        // Send email notification via EmailJS
+        await emailjs.send(
+            'service_atvq2zf',      // Service ID
+            'template_k0k3yec',     // Template ID
+            emailParams
+        );
 
         // Show success message
         alert(`Thank you for your enquiry, ${name}!\n\nWe have received your request for ${cart.length} product(s). Our team will contact you shortly at ${email}.\n\nEnquiry Details:\n${cart.map(item => `- ${item.name} (Qty: ${item.quantity})`).join('\n')}`);
@@ -702,7 +734,7 @@ async function submitEnquiry() {
         form.reset();
     } catch (error) {
         console.error('Error submitting enquiry:', error);
-        alert('Failed to submit enquiry. Please try again or contact us directly.');
+        alert('Failed to submit enquiry. Please try again or contact us directly.\n\nError: ' + (error.message || 'Unknown error'));
     }
 }
 
