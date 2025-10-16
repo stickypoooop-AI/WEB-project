@@ -1,4 +1,7 @@
 {
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "installCommand": null,
   "headers": [
     {
       "source": "/(.*)",
