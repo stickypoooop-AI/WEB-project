@@ -483,7 +483,7 @@ function renderProducts() {
     }
 
     grid.innerHTML = filteredProducts.map(product => `
-        <div class="product-card" onclick="openProductModal(${product.id})">
+        <div class="product-card" onclick="openProductModal('${product.id}')">
             <img src="${product.image}" alt="${product.name}" class="product-image">
             <span class="product-category">${product.category}</span>
             <h3 class="product-name">${product.name}</h3>
@@ -516,7 +516,7 @@ function normalizeText(text) {
 
 // Product Modal
 function openProductModal(productId) {
-    selectedProduct = products.find(p => p.id === productId);
+    selectedProduct = products.find(p => String(p.id) === String(productId));
     if (!selectedProduct) return;
 
     document.getElementById('modalProductName').textContent = selectedProduct.name;
@@ -558,7 +558,7 @@ function addToCart() {
     if (!selectedProduct) return;
 
     const quantity = parseInt(document.getElementById('quantityInput').value);
-    const existingItem = cart.find(item => item.id === selectedProduct.id);
+    const existingItem = cart.find(item => String(item.id) === String(selectedProduct.id));
 
     if (existingItem) {
         existingItem.quantity += quantity;
@@ -577,7 +577,7 @@ function addToCart() {
 }
 
 function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
+    cart = cart.filter(item => String(item.id) !== String(productId));
     updateCartCount();
     renderCartItems();
 }
@@ -616,7 +616,7 @@ function renderCartItems() {
                     Quantity: ${item.quantity} | $${(item.price * item.quantity).toFixed(2)}
                 </div>
             </div>
-            <button class="cart-item-remove" onclick="removeFromCart(${item.id})">
+            <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">
                 <i class="fas fa-times"></i>
             </button>
         </div>
@@ -790,10 +790,10 @@ function renderAdminProducts() {
                         <td>${product.size}</td>
                         <td>
                             <div class="admin-actions">
-                                <button class="btn btn-edit btn-icon btn-small" onclick="editProduct(${product.id})">
+                                <button class="btn btn-edit btn-icon btn-small" onclick="editProduct('${product.id}')">
                                     <i class="fas fa-edit"></i> Edit
                                 </button>
-                                <button class="btn btn-danger btn-icon btn-small" onclick="deleteProduct(${product.id})">
+                                <button class="btn btn-danger btn-icon btn-small" onclick="deleteProduct('${product.id}')">
                                     <i class="fas fa-trash"></i> Delete
                                 </button>
                             </div>
@@ -816,7 +816,7 @@ function openProductForm(productId = null) {
     removeSelectedImage(); // Clear image upload state
 
     if (productId) {
-        const product = products.find(p => p.id === productId);
+        const product = products.find(p => String(p.id) === String(productId));
         if (product) {
             title.textContent = 'Edit Product';
             document.getElementById('productId').value = product.id;
