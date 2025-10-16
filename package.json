@@ -1,0 +1,29 @@
+{
+  "name": "naxiwell-industrial",
+  "version": "1.0.0",
+  "description": "NaxiWell Industrial & Hardware Supplier - E-commerce website for industrial fasteners and hardware",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'No build step required for static site'",
+    "preview": "npx serve ."
+  },
+  "keywords": [
+    "industrial",
+    "hardware",
+    "fasteners",
+    "screws",
+    "bolts",
+    "nuts",
+    "washers",
+    "e-commerce"
+  ],
+  "author": "NaxiWell Industrial",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.3"
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaxiWell Industrial & Hardware Supplier</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-tools"></i>
+                    <span>NaxiWell Industrial</span>
+                </div>
+                <nav class="main-nav">
+                    <a href="#products" class="nav-link active">Products</a>
+                    <a href="#about" class="nav-link">About Us</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </nav>
+                <div class="header-actions">
+                    <button class="admin-btn" id="adminBtn">
+                        <i class="fas fa-cog"></i>
+                        <span>Admin</span>
+                    </button>
+                    <button class="cart-btn" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">NaxiWell Industrial Quality Fasteners & Hardware</h1>
+                <p class="hero-subtitle">Your trusted partner for industrial-grade fastening solutions. Quality guaranteed, delivered on time.</p>
+                <div class="hero-cta">
+                    <a href="#products" class="btn btn-primary btn-large">Browse Products</a>
+                    <a href="#contact" class="btn btn-secondary btn-large">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>About NaxiWell Industrial</h2>
+                <p>Industry-leading fastening solutions since 2015</p>
+            </div>
+            <div class="about-content">
+                <p class="about-description">
+                    Changzhou Niuxiuwei Trading Co., Ltd. is a limited liability company established on 20 Oct 2015 and based at No. 96 Huaide South Road, Zhonglou District, Changzhou, China.
+                    Guided by legal representative Ms. Tang Wenting, the company engages in the wholesale and retail of industrial hardware and related materials, including (non-hazardous) packaging and decorative materials, hardware & fasteners, building materials, electrical and lighting supplies, solar-related products, electronic products, machinery & equipment, and auto parts.
+                    Where permitted by law, the company may conduct goods and technology import & export (items subject to approval are carried out after obtaining the required licenses).
+                </p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Quality Assurance</h3>
+                        <p>Products aligned with relevant DIN/ISO/GB standards where applicable. Incoming inspection & pre-shipment checks to ensure consistency</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h3>Fast Delivery</h3>
+                        <p>Efficient supply and logistics network in the Yangtze River Delta. On-time dispatch commitment for common specifications</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Expert Support</h3>
+                        <p>Application-oriented guidance on fastener selection and substitutions. Responsive service for quotations, samples, and technical questions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Products</h2>
+                <p>Browse our extensive collection of fasteners and hardware</p>
+            </div>
+
+            <div class="products-layout">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <div class="sidebar-section">
+                        <h3>Categories</h3>
+                        <div class="category-list">
+                            <button class="category-btn active" data-category="all">
+                                <i class="fas fa-th"></i> All Products
+                            </button>
+                            <button class="category-btn" data-category="screws">
+                                <i class="fas fa-bolt"></i> Screws
+                            </button>
+                            <button class="category-btn" data-category="bolts">
+                                <i class="fas fa-grip-lines"></i> Bolts
+                            </button>
+                            <button class="category-btn" data-category="nuts">
+                                <i class="fas fa-circle-notch"></i> Nuts
+                            </button>
+                            <button class="category-btn" data-category="washers">
+                                <i class="fas fa-circle"></i> Washers
+                            </button>
+                            <button class="category-btn" data-category="anchors">
+                                <i class="fas fa-anchor"></i> Anchors
+                            </button>
+                            <button class="category-btn" data-category="rivets">
+                                <i class="fas fa-dot-circle"></i> Rivets
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Filters</h3>
+                        <div class="filter-group">
+                            <label>Material</label>
+                            <select id="materialFilter">
+                                <option value="">All Materials</option>
+                                <option value="stainless-steel">Stainless Steel</option>
+                                <option value="carbon-steel">Carbon Steel</option>
+                                <option value="brass">Brass</option>
+                                <option value="aluminum">Aluminum</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Finish</label>
+                            <select id="finishFilter">
+                                <option value="">All Finishes</option>
+                                <option value="zinc-plated">Zinc Plated</option>
+                                <option value="black-oxide">Black Oxide</option>
+                                <option value="plain">Plain</option>
+                                <option value="galvanized">Galvanized</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-secondary btn-small" id="clearFilters">Clear Filters</button>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <div class="products-main">
+                    <div class="products-toolbar">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Search products...">
+                        </div>
+                        <div class="sort-box">
+                            <label>Sort by:</label>
+                            <select id="sortSelect">
+                                <option value="name">Name</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="productsGrid" class="products-grid">
+                        <!-- Products will be loaded here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contact Us</h2>
+                <p>Get in touch for quotes, inquiries, or support</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>No. 96 Huaide South Road, Zhonglou District<br>Changzhou, China</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>0404693189</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>zhangyanbin_1@hotmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Business Hours</h4>
+                            <p>Monday - Friday: 8:00 AM - 6:00 PM<br>Saturday: 9:00 AM - 2:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>NaxiWell Industrial</h4>
+                    <p>Your trusted partner for quality hardware solutions since 2015.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#products">Products</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <a href="#products">Screws</a>
+                    <a href="#products">Bolts</a>
+                    <a href="#products">Nuts</a>
+                    <a href="#products">Washers</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 NaxiWell Industrial. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Your Enquiry Cart</h3>
+                <button class="close-btn" id="closeCart">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="cartItems"></div>
+                <div class="cart-total">
+                    <strong>Total Items: <span id="totalItems">0</span></strong>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="closeCart2">Continue Shopping</button>
+                <button class="btn btn-primary" id="proceedEnquiry">Send Enquiry</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enquiry Modal -->
+    <div id="enquiryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Send Enquiry</h3>
+                <button class="close-btn" id="closeEnquiry">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="enquiryForm">
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input type="text" id="customerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Company Name</label>
+                        <input type="text" id="companyName">
+                    </div>
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="customerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone *</label>
+                        <input type="tel" id="customerPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea id="customerAddress" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Additional Notes</label>
+                        <textarea id="additionalNotes" rows="4"></textarea>
+                    </div>
+                    <div class="enquiry-summary">
+                        <h4>Selected Products</h4>
+                        <div id="enquirySummary"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="closeEnquiry2">Cancel</button>
+                <button class="btn btn-primary" id="submitEnquiry">Submit Enquiry</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h3>Admin Access</h3>
+                <button class="close-btn" id="closeAdminLogin">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="admin-login-desc">Enter your 32-character admin key to access the management dashboard</p>
+                <div class="form-group">
+                    <label>Admin Key</label>
+                    <input type="password" id="adminKeyInput" placeholder="Enter 32-character key" maxlength="32">
+                </div>
+                <div id="adminLoginError" class="error-message"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelAdminLogin">Cancel</button>
+                <button class="btn btn-primary" id="submitAdminLogin">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-dashboard">
+        <div class="admin-container">
+            <div class="admin-header">
+                <div class="admin-logo">
+                    <i class="fas fa-tools"></i>
+                    <span>Admin Dashboard</span>
+                </div>
+                <button class="btn btn-secondary" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+
+            <div class="admin-content">
+                <div class="admin-section">
+                    <div class="admin-section-header">
+                        <h2>Product Management</h2>
+                        <button class="btn btn-primary" id="addProductBtn">
+                            <i class="fas fa-plus"></i> Add New Product
+                        </button>
+                    </div>
+
+                    <div id="adminProductsTable" class="admin-products-table">
+                        <!-- Products table will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div id="productFormModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 id="productFormTitle">Add New Product</h3>
+                <button class="close-btn" id="closeProductForm">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Product Name *</label>
+                            <input type="text" id="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Category *</label>
+                            <select id="productCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="screws">Screws</option>
+                                <option value="bolts">Bolts</option>
+                                <option value="nuts">Nuts</option>
+                                <option value="washers">Washers</option>
+                                <option value="anchors">Anchors</option>
+                                <option value="rivets">Rivets</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Material *</label>
+                            <select id="productMaterial" required>
+                                <option value="">Select Material</option>
+                                <option value="stainless-steel">Stainless Steel</option>
+                                <option value="carbon-steel">Carbon Steel</option>
+                                <option value="brass">Brass</option>
+                                <option value="aluminum">Aluminum</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Finish *</label>
+                            <select id="productFinish" required>
+                                <option value="">Select Finish</option>
+                                <option value="zinc-plated">Zinc Plated</option>
+                                <option value="black-oxide">Black Oxide</option>
+                                <option value="plain">Plain</option>
+                                <option value="galvanized">Galvanized</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Price ($) *</label>
+                            <input type="number" id="productPrice" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Size *</label>
+                            <input type="text" id="productSize" placeholder="e.g., M6 x 40mm" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Image URL *</label>
+                        <input type="url" id="productImage" placeholder="https://..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description *</label>
+                        <textarea id="productDescription" rows="4" required></textarea>
+                    </div>
+
+                    <input type="hidden" id="productId">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelProductForm">Cancel</button>
+                <button class="btn btn-primary" id="saveProduct">Save Product</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 id="modalProductName"></h3>
+                <button class="close-btn" id="closeProduct">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="product-detail-grid">
+                    <div class="product-image-section">
+                        <img id="modalProductImage" src="" alt="">
+                    </div>
+                    <div class="product-info-section">
+                        <div class="product-price" id="modalProductPrice"></div>
+                        <div class="product-specs">
+                            <h4>Specifications</h4>
+                            <div id="modalProductSpecs"></div>
+                        </div>
+                        <div class="product-description" id="modalProductDescription"></div>
+                        <div class="quantity-selector">
+                            <label>Quantity:</label>
+                            <div class="quantity-controls">
+                                <button class="qty-btn" id="decreaseQty">-</button>
+                                <input type="number" id="quantityInput" value="1" min="1">
+                                <button class="qty-btn" id="increaseQty">+</button>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-large" id="addToCartBtn">Add to Enquiry Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Supabase Client Configuration -->
+    <script src="supabase-client.js"></script>
+    <!-- Main Application Script -->
+    <script src="script.js"></script>
+</body>
+</html>
