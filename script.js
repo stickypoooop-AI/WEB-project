@@ -323,6 +323,10 @@ let currentSort = 'name';
 let searchQuery = '';
 let selectedProduct = null;
 
+// Enquiry submission throttle (30 seconds cooldown)
+const ENQUIRY_COOLDOWN_MS = 30000;
+let lastEnquiryTime = 0;
+
 // Initialize App
 document.addEventListener('DOMContentLoaded', async () => {
     initializeEventListeners();
@@ -652,6 +656,14 @@ function renderEnquirySummary() {
 }
 
 async function submitEnquiry() {
+    // Check rate limiting (30 seconds cooldown)
+    const now = Date.now();
+    if (now - lastEnquiryTime < ENQUIRY_COOLDOWN_MS) {
+        const remainingSeconds = Math.ceil((ENQUIRY_COOLDOWN_MS - (now - lastEnquiryTime)) / 1000);
+        alert(`⏳ Please wait ${remainingSeconds} seconds before submitting another enquiry.\n\nThis helps us prevent spam and ensure quality service.`);
+        return;
+    }
+
     const form = document.getElementById('enquiryForm');
 
     // Validate required fields
@@ -671,13 +683,25 @@ async function submitEnquiry() {
         return;
     }
 
+    // Phone validation (basic)
+    if (phone.length < 8) {
+        alert('Please enter a valid phone number (minimum 8 digits)');
+        return;
+    }
+
+    // Disable submit button to prevent double submission
+    const submitBtn = document.getElementById('submitEnquiry');
+    const originalBtnText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
     // Prepare enquiry data for Supabase
     const enquiryData = {
         customer_name: name,
         customer_email: email,
         customer_phone: phone,
-        company_name: document.getElementById('companyName').value || null,
-        customer_address: document.getElementById('customerAddress').value || null,
+        company_name: document.getElementById('companyName').value?.trim() || null,
+        customer_address: document.getElementById('customerAddress').value?.trim() || null,
         products: cart.map(item => ({
             id: item.id,
             name: item.name,
@@ -685,12 +709,19 @@ async function submitEnquiry() {
             price: item.price,
             specs: `${item.size} | ${item.material} | ${item.finish}`
         })),
-        notes: document.getElementById('additionalNotes').value || null
+        notes: document.getElementById('additionalNotes').value?.trim() || null
     };
 
     try {
+        // TODO: Add Turnstile/reCAPTCHA verification here (future enhancement)
+        // const captchaToken = await verifyCaptcha();
+        // enquiryData.captcha_token = captchaToken;
+
         // Save enquiry to Supabase database
         await db.enquiries.create(enquiryData);
+
+        // Update last submission time
+        lastEnquiryTime = now;
 
         // Prepare email template parameters
         const productsListForEmail = cart.map(item =>
@@ -725,7 +756,7 @@ async function submitEnquiry() {
         );
 
         // Show success message
-        alert(`Thank you for your enquiry, ${name}!\n\nWe have received your request for ${cart.length} product(s). Our team will contact you shortly at ${email}.\n\nEnquiry Details:\n${cart.map(item => `- ${item.name} (Qty: ${item.quantity})`).join('\n')}`);
+        alert(`✅ Thank you for your enquiry, ${name}!\n\nWe have received your request for ${cart.length} product(s). Our team will contact you shortly at ${email}.\n\nEnquiry Details:\n${cart.map(item => `- ${item.name} (Qty: ${item.quantity})`).join('\n')}`);
 
         // Clear cart and close modals
         cart = [];
@@ -733,9 +764,44 @@ async function submitEnquiry() {
         closeEnquiryModal();
         form.reset();
     } catch (error) {
-        console.error('Error submitting enquiry:', error);
-        alert('Failed to submit enquiry. Please try again or contact us directly.\n\nError: ' + (error.message || 'Unknown error'));
+        console.error('❌ Error submitting enquiry:', error);
+        console.error('Error details:', {
+            code: error.code,
+            message: error.message,
+            details: error.details,
+            hint: error.hint
+        });
+
+        // User-friendly error messages based on error type
+        let errorMessage = '提交失败，请稍后重试或直接联系我们。\n\nFailed to submit enquiry. Please try again later or contact us directly.\n\n';
+
+        if (error.code === '42501') {
+            // RLS policy violation
+            errorMessage += '错误原因：数据库权限配置问题\nReason: Database permission issue\n\n请联系管理员或通过以下方式联系我们：\nPlease contact admin or reach us via:\n📧 Email: stickypoooop@gmail.com\n📞 Phone: 0413428683';
+        } else if (error.code === 'PGRST116') {
+            // RLS policy not found
+            errorMessage += '错误原因：数据库策略未配置\nReason: Database policy not configured\n\n请联系管理员。\nPlease contact admin.';
+        } else if (error.message?.includes('network') || error.message?.includes('fetch')) {
+            // Network error
+            errorMessage += '错误原因：网络连接问题\nReason: Network connection issue\n\n请检查网络连接后重试。\nPlease check your network and try again.';
+        } else {
+            // Generic error
+            errorMessage += `错误详情：${error.message || 'Unknown error'}\nError details: ${error.message || 'Unknown error'}`;
+        }
+
+        alert(errorMessage);
+    } finally {
+        // Re-enable submit button
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
     }
+}
+
+// TODO: Captcha verification function (placeholder for future enhancement)
+async function verifyCaptcha() {
+    // Placeholder for Turnstile/reCAPTCHA integration
+    // return await turnstile.verify() or grecaptcha.execute();
+    return null;
 }
 
 // Admin Functions
