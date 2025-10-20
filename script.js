@@ -11,6 +11,17 @@ let productsData = null;
 let categoriesData = [];
 let materialsData = [];
 
+// Category icon mapping
+const categoryIcons = {
+    'screws': 'fa-bolt',
+    'bolts': 'fa-grip-lines',
+    'nuts': 'fa-circle-notch',
+    'washers': 'fa-circle',
+    'anchors': 'fa-anchor',
+    'rivets': 'fa-dot-circle',
+    'one-way-clutch': 'fa-cog'
+};
+
 // Default Product Database
 const defaultProducts = [
     // Screws
@@ -322,9 +333,54 @@ async function loadCategoriesFromDB() {
     try {
         categoriesData = await db.categories.getAll();
         updateCategoryOptions();
+        renderCategorySidebar(); // Update sidebar when categories change
     } catch (error) {
         console.error('Error loading categories:', error);
     }
+}
+
+// Render categories in sidebar
+function renderCategorySidebar() {
+    const categoryList = document.getElementById('categoryList');
+    if (!categoryList) return;
+
+    // Keep the "All Products" button and clear the rest
+    const allProductsBtn = categoryList.querySelector('[data-category="all"]');
+    categoryList.innerHTML = '';
+    if (allProductsBtn) {
+        categoryList.appendChild(allProductsBtn);
+    } else {
+        categoryList.innerHTML = `
+            <button class="category-btn active" data-category="all">
+                <i class="fas fa-th"></i> All Products
+            </button>
+        `;
+    }
+
+    // Add categories from database
+    categoriesData.forEach(cat => {
+        const icon = categoryIcons[cat.name] || 'fa-tag'; // Use default icon if not mapped
+        const btn = document.createElement('button');
+        btn.className = 'category-btn';
+        btn.setAttribute('data-category', cat.name);
+        btn.innerHTML = `<i class="fas ${icon}"></i> ${cat.display_name}`;
+        categoryList.appendChild(btn);
+    });
+
+    // Re-attach event listeners
+    attachCategoryListeners();
+}
+
+// Attach event listeners to category buttons
+function attachCategoryListeners() {
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentCategory = btn.dataset.category;
+            renderProducts();
+        });
+    });
 }
 
 async function loadMaterialsFromDB() {
@@ -379,15 +435,7 @@ function initializeEventListeners() {
         });
     });
 
-    // Category Buttons
-    document.querySelectorAll('.category-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentCategory = btn.dataset.category;
-            renderProducts();
-        });
-    });
+    // Category Buttons (handled by attachCategoryListeners() when categories are loaded)
 
     // Filters
     document.getElementById('materialFilter').addEventListener('change', (e) => {
