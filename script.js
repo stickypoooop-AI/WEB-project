@@ -339,6 +339,15 @@ async function loadCategoriesFromDB() {
     }
 }
 
+// Get display name based on current language
+function getDisplayName(item, type = 'category') {
+    const lang = i18n.currentLang;
+    if (lang === 'zh' && item.name_zh) {
+        return item.name_zh;
+    }
+    return item.display_name || item.name;
+}
+
 // Render categories in sidebar
 function renderCategorySidebar() {
     const categoryList = document.getElementById('categoryList');
@@ -352,7 +361,7 @@ function renderCategorySidebar() {
     } else {
         categoryList.innerHTML = `
             <button class="category-btn active" data-category="all">
-                <i class="fas fa-th"></i> All Products
+                <i class="fas fa-th"></i> <span data-i18n="products_all">All Products</span>
             </button>
         `;
     }
@@ -363,7 +372,7 @@ function renderCategorySidebar() {
         const btn = document.createElement('button');
         btn.className = 'category-btn';
         btn.setAttribute('data-category', cat.name);
-        btn.innerHTML = `<i class="fas ${icon}"></i> ${cat.display_name}`;
+        btn.innerHTML = `<i class="fas ${icon}"></i> ${getDisplayName(cat)}`;
         categoryList.appendChild(btn);
     });
 
@@ -411,6 +420,7 @@ let lastEnquiryTime = 0;
 document.addEventListener('DOMContentLoaded', async () => {
     initializeEventListeners();
     initializeAdminListeners();
+    initializeLanguageSystem();
     updateCartCount();
     checkAdminSession();
 
@@ -587,21 +597,29 @@ function openProductModal(productId) {
 
     document.getElementById('modalProductName').textContent = selectedProduct.name;
     document.getElementById('modalProductImage').src = selectedProduct.image;
-    document.getElementById('modalProductPrice').textContent = `$${selectedProduct.price.toFixed(2)} per unit`;
-    document.getElementById('modalProductDescription').textContent = selectedProduct.description;
+    document.getElementById('modalProductPrice').textContent = `$${selectedProduct.price.toFixed(2)} ${i18n.t('product_per_unit')}`;
+    document.getElementById('modalProductDescription').textContent = getProductDescription(selectedProduct);
+
+    // Get category display name
+    const category = categoriesData.find(c => c.name === selectedProduct.category);
+    const categoryDisplay = category ? getDisplayName(category) : formatMaterial(selectedProduct.category);
+
+    // Get material display name
+    const material = materialsData.find(m => m.name === selectedProduct.material);
+    const materialDisplay = material ? getDisplayName(material) : formatMaterial(selectedProduct.material);
 
     const specsHtml = `
         <div class="spec-item">
-            <span class="spec-label">Category:</span>
-            <span class="spec-value">${formatMaterial(selectedProduct.category)}</span>
+            <span class="spec-label">${i18n.t('product_category')}</span>
+            <span class="spec-value">${categoryDisplay}</span>
         </div>
         <div class="spec-item">
-            <span class="spec-label">Size:</span>
+            <span class="spec-label">${i18n.t('product_size')}</span>
             <span class="spec-value">${selectedProduct.size}</span>
         </div>
         <div class="spec-item">
-            <span class="spec-label">Material:</span>
-            <span class="spec-value">${formatMaterial(selectedProduct.material)}</span>
+            <span class="spec-label">${i18n.t('product_material')}</span>
+            <span class="spec-value">${materialDisplay}</span>
         </div>
     `;
 
@@ -925,7 +943,7 @@ function openProductForm(productId = null) {
     if (productId) {
         const product = products.find(p => String(p.id) === String(productId));
         if (product) {
-            title.textContent = 'Edit Product';
+            title.textContent = i18n.t('product_form_edit');
             document.getElementById('productId').value = product.id;
             document.getElementById('productName').value = product.name;
             document.getElementById('productCategory').value = product.category;
@@ -933,6 +951,7 @@ function openProductForm(productId = null) {
             document.getElementById('productPrice').value = product.price;
             document.getElementById('productSize').value = product.size;
             document.getElementById('productDescription').value = product.description;
+            document.getElementById('productDescriptionZh').value = product.description_zh || '';
             document.getElementById('productImageUrl').value = product.image;
 
             // Store current image URL
@@ -941,10 +960,10 @@ function openProductForm(productId = null) {
             // Show existing image preview
             document.getElementById('previewImg').src = product.image;
             document.getElementById('imagePreview').style.display = 'block';
-            document.getElementById('imageFileName').textContent = 'Current image (click Choose Image to change)';
+            document.getElementById('imageFileName').textContent = i18n.t('product_image_current');
         }
     } else {
-        title.textContent = 'Add New Product';
+        title.textContent = i18n.t('product_form_add');
         document.getElementById('productId').value = '';
         currentImageUrl = null;
     }
@@ -997,7 +1016,8 @@ async function saveProduct() {
             price: parseFloat(document.getElementById('productPrice').value),
             size: document.getElementById('productSize').value,
             image: imageUrl,
-            description: document.getElementById('productDescription').value
+            description: document.getElementById('productDescription').value,
+            description_zh: document.getElementById('productDescriptionZh').value || null
         };
 
         if (productId) {
@@ -1225,19 +1245,22 @@ function renderMaterialsList() {
 async function addCategory() {
     const nameInput = document.getElementById('newCategoryName');
     const displayInput = document.getElementById('newCategoryDisplay');
+    const nameZhInput = document.getElementById('newCategoryNameZh');
 
     const name = nameInput.value.trim();
     const displayName = displayInput.value.trim();
+    const nameZh = nameZhInput.value.trim();
 
     if (!name || !displayName) {
-        alert('Please enter both category name and display name');
+        alert(i18n.t('msg_fill_both_names'));
         return;
     }
 
     try {
         await db.categories.create({
             name: name,
-            display_name: displayName
+            display_name: displayName,
+            name_zh: nameZh || null
         });
 
         // Reload categories
@@ -1246,8 +1269,9 @@ async function addCategory() {
         // Clear inputs
         nameInput.value = '';
         displayInput.value = '';
+        nameZhInput.value = '';
 
-        alert('✅ Category added successfully!');
+        alert(i18n.t('msg_category_added'));
     } catch (error) {
         console.error('Error adding category:', error);
         alert('❌ Failed to add category: ' + error.message);
@@ -1257,19 +1281,22 @@ async function addCategory() {
 async function addMaterial() {
     const nameInput = document.getElementById('newMaterialName');
     const displayInput = document.getElementById('newMaterialDisplay');
+    const nameZhInput = document.getElementById('newMaterialNameZh');
 
     const name = nameInput.value.trim();
     const displayName = displayInput.value.trim();
+    const nameZh = nameZhInput.value.trim();
 
     if (!name || !displayName) {
-        alert('Please enter both material name and display name');
+        alert(i18n.t('msg_fill_both_names'));
         return;
     }
 
     try {
         await db.materials.create({
             name: name,
-            display_name: displayName
+            display_name: displayName,
+            name_zh: nameZh || null
         });
 
         // Reload materials
@@ -1278,8 +1305,9 @@ async function addMaterial() {
         // Clear inputs
         nameInput.value = '';
         displayInput.value = '';
+        nameZhInput.value = '';
 
-        alert('✅ Material added successfully!');
+        alert(i18n.t('msg_material_added'));
     } catch (error) {
         console.error('Error adding material:', error);
         alert('❌ Failed to add material: ' + error.message);
@@ -1396,6 +1424,47 @@ function renderAdminProducts() {
     `;
 
     tableContainer.innerHTML = tableHTML;
+}
+
+// ============================================================
+// Language System Functions
+// ============================================================
+
+function initializeLanguageSystem() {
+    // Language button click handler
+    const langBtn = document.getElementById('langBtn');
+    if (langBtn) {
+        langBtn.addEventListener('click', () => {
+            const newLang = i18n.currentLang === 'en' ? 'zh' : 'en';
+            i18n.setLanguage(newLang);
+        });
+    }
+
+    // Listen for language change events
+    document.addEventListener('languageChanged', () => {
+        // Re-render categories and materials with new language
+        renderCategorySidebar();
+        updateMaterialOptions();
+
+        // Re-render products to show translated descriptions
+        renderProducts();
+
+        // Re-render admin if open
+        if (document.getElementById('adminDashboard').classList.contains('active')) {
+            renderAdminProducts();
+            renderCategoriesList();
+            renderMaterialsList();
+        }
+    });
+}
+
+// Get product description based on current language
+function getProductDescription(product) {
+    const lang = i18n.currentLang;
+    if (lang === 'zh' && product.description_zh) {
+        return product.description_zh;
+    }
+    return product.description;
 }
 
 // Expose functions to global scope for onclick handlers

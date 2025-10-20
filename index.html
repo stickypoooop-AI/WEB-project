@@ -26,14 +26,15 @@
                     <span>NaxiWell Industrial</span>
                 </div>
                 <nav class="main-nav">
-                    <a href="#products" class="nav-link active">Products</a>
-                    <a href="#about" class="nav-link">About Us</a>
-                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="#products" class="nav-link active" data-i18n="nav_products">Products</a>
+                    <a href="#about" class="nav-link" data-i18n="nav_about">About Us</a>
+                    <a href="#contact" class="nav-link" data-i18n="nav_contact">Contact</a>
                 </nav>
                 <div class="header-actions">
+                    <button class="lang-btn" id="langBtn">中文</button>
                     <button class="admin-btn" id="adminBtn">
                         <i class="fas fa-cog"></i>
-                        <span>Admin</span>
+                        <span data-i18n="nav_admin">Admin</span>
                     </button>
                     <button class="cart-btn" id="cartBtn">
                         <i class="fas fa-shopping-cart"></i>
@@ -48,11 +49,11 @@
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">NaxiWell Industrial Quality Fasteners & Hardware</h1>
-                <p class="hero-subtitle">Your trusted partner for industrial-grade fastening solutions. Quality guaranteed, delivered on time.</p>
+                <h1 class="hero-title" data-i18n="hero_title">NaxiWell Industrial Quality Fasteners & Hardware</h1>
+                <p class="hero-subtitle" data-i18n="hero_subtitle">Your trusted partner for industrial-grade fastening solutions. Quality guaranteed, delivered on time.</p>
                 <div class="hero-cta">
-                    <a href="#products" class="btn btn-primary btn-large">Browse Products</a>
-                    <a href="#contact" class="btn btn-secondary btn-large">Contact Sales</a>
+                    <a href="#products" class="btn btn-primary btn-large" data-i18n="hero_browse">Browse Products</a>
+                    <a href="#contact" class="btn btn-secondary btn-large" data-i18n="hero_contact">Contact Sales</a>
                 </div>
             </div>
         </div>
@@ -62,11 +63,11 @@
     <section id="about" class="about-section">
         <div class="container">
             <div class="section-header">
-                <h2>About NaxiWell Industrial</h2>
-                <p>Industry-leading fastening solutions since 2015</p>
+                <h2 data-i18n="about_title">About NaxiWell Industrial</h2>
+                <p data-i18n="about_subtitle">Industry-leading fastening solutions since 2015</p>
             </div>
             <div class="about-content">
-                <p class="about-description">
+                <p class="about-description" data-i18n="about_description">
                     Changzhou Niuxiuwei Trading Co., Ltd. is a limited liability company established on 20 Oct 2015 and based at No. 96 Huaide South Road, Zhonglou District, Changzhou, China.
                     Guided by legal representative Ms. Tang Wenting, the company engages in the wholesale and retail of industrial hardware and related materials, including (non-hazardous) packaging and decorative materials, hardware & fasteners, building materials, electrical and lighting supplies, solar-related products, electronic products, machinery & equipment, and auto parts.
                     Where permitted by law, the company may conduct goods and technology import & export (items subject to approval are carried out after obtaining the required licenses).
@@ -76,22 +77,22 @@
                         <div class="feature-icon">
                             <i class="fas fa-shield-alt"></i>
                         </div>
-                        <h3>Quality Assurance</h3>
-                        <p>Products aligned with relevant DIN/ISO/GB standards where applicable. Incoming inspection & pre-shipment checks to ensure consistency</p>
+                        <h3 data-i18n="feature_quality_title">Quality Assurance</h3>
+                        <p data-i18n="feature_quality_desc">Products aligned with relevant DIN/ISO/GB standards where applicable. Incoming inspection & pre-shipment checks to ensure consistency</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-truck"></i>
                         </div>
-                        <h3>Fast Delivery</h3>
-                        <p>Efficient supply and logistics network in the Yangtze River Delta. On-time dispatch commitment for common specifications</p>
+                        <h3 data-i18n="feature_delivery_title">Fast Delivery</h3>
+                        <p data-i18n="feature_delivery_desc">Efficient supply and logistics network in the Yangtze River Delta. On-time dispatch commitment for common specifications</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-headset"></i>
                         </div>
-                        <h3>Expert Support</h3>
-                        <p>Application-oriented guidance on fastener selection and substitutions. Responsive service for quotations, samples, and technical questions</p>
+                        <h3 data-i18n="feature_support_title">Expert Support</h3>
+                        <p data-i18n="feature_support_desc">Application-oriented guidance on fastener selection and substitutions. Responsive service for quotations, samples, and technical questions</p>
                     </div>
                 </div>
             </div>
@@ -102,19 +103,19 @@
     <section id="products" class="products-section">
         <div class="container">
             <div class="section-header">
-                <h2>Our Products</h2>
-                <p>Browse our extensive collection of fasteners and hardware</p>
+                <h2 data-i18n="products_title">Our Products</h2>
+                <p data-i18n="products_subtitle">Browse our extensive collection of fasteners and hardware</p>
             </div>
 
             <div class="products-layout">
                 <!-- Sidebar -->
                 <aside class="sidebar">
                     <div class="sidebar-section">
-                        <h3>Categories</h3>
+                        <h3 data-i18n="filter_categories">Categories</h3>
                         <div class="category-list" id="categoryList">
                             <!-- Categories will be loaded dynamically from database -->
                             <button class="category-btn active" data-category="all">
-                                <i class="fas fa-th"></i> All Products
+                                <i class="fas fa-th"></i> <span data-i18n="products_all">All Products</span>
                             </button>
                         </div>
                     </div>
@@ -122,17 +123,12 @@
                     <div class="sidebar-section">
                         <h3>Filters</h3>
                         <div class="filter-group">
-                            <label>Material</label>
+                            <label data-i18n="filter_material">Material</label>
                             <select id="materialFilter">
-                                <option value="">All Materials</option>
-                                <option value="stainless-steel">Stainless Steel</option>
-                                <option value="carbon-steel">Carbon Steel</option>
-                                <option value="brass">Brass</option>
-                                <option value="aluminum">Aluminum</option>
-                                <option value="te-gcr">Te & Gcr</option>
+                                <option value="" data-i18n="filter_all_materials">All Materials</option>
                             </select>
                         </div>
-                        <button class="btn btn-secondary btn-small" id="clearFilters">Clear Filters</button>
+                        <button class="btn btn-secondary btn-small" id="clearFilters" data-i18n="filter_clear">Clear Filters</button>
                     </div>
                 </aside>
 
@@ -141,14 +137,14 @@
                     <div class="products-toolbar">
                         <div class="search-box">
                             <i class="fas fa-search"></i>
-                            <input type="text" id="searchInput" placeholder="Search products...">
+                            <input type="text" id="searchInput" data-i18n="search_placeholder" placeholder="Search products...">
                         </div>
                         <div class="sort-box">
-                            <label>Sort by:</label>
+                            <label data-i18n="sort_label">Sort by:</label>
                             <select id="sortSelect">
-                                <option value="name">Name</option>
-                                <option value="price-low">Price: Low to High</option>
-                                <option value="price-high">Price: High to Low</option>
+                                <option value="name" data-i18n="sort_name">Name</option>
+                                <option value="price-low" data-i18n="sort_price_low">Price: Low to High</option>
+                                <option value="price-high" data-i18n="sort_price_high">Price: High to Low</option>
                             </select>
                         </div>
                     </div>
@@ -349,12 +345,13 @@
                     <div class="options-management">
                         <!-- Categories -->
                         <div class="options-group">
-                            <h3>Categories</h3>
+                            <h3 data-i18n="admin_categories">Categories</h3>
                             <div class="options-add">
-                                <input type="text" id="newCategoryName" placeholder="Category name (e.g., screws)">
-                                <input type="text" id="newCategoryDisplay" placeholder="Display name (e.g., Screws)">
+                                <input type="text" id="newCategoryName" data-i18n="admin_category_name" placeholder="Category name (e.g., screws)">
+                                <input type="text" id="newCategoryDisplay" data-i18n="admin_category_display" placeholder="Display name (e.g., Screws)">
+                                <input type="text" id="newCategoryNameZh" data-i18n="admin_category_name_zh" placeholder="Chinese name (optional)">
                                 <button class="btn btn-primary btn-small" onclick="addCategory()">
-                                    <i class="fas fa-plus"></i> Add
+                                    <i class="fas fa-plus"></i> <span data-i18n="admin_add">Add</span>
                                 </button>
                             </div>
                             <div id="categoriesList" class="options-list">
@@ -364,12 +361,13 @@
 
                         <!-- Materials -->
                         <div class="options-group">
-                            <h3>Materials</h3>
+                            <h3 data-i18n="admin_materials">Materials</h3>
                             <div class="options-add">
-                                <input type="text" id="newMaterialName" placeholder="Material name (e.g., stainless-steel)">
-                                <input type="text" id="newMaterialDisplay" placeholder="Display name (e.g., Stainless Steel)">
+                                <input type="text" id="newMaterialName" data-i18n="admin_material_name" placeholder="Material name (e.g., stainless-steel)">
+                                <input type="text" id="newMaterialDisplay" data-i18n="admin_material_display" placeholder="Display name (e.g., Stainless Steel)">
+                                <input type="text" id="newMaterialNameZh" data-i18n="admin_material_name_zh" placeholder="Chinese name (optional)">
                                 <button class="btn btn-primary btn-small" onclick="addMaterial()">
-                                    <i class="fas fa-plus"></i> Add
+                                    <i class="fas fa-plus"></i> <span data-i18n="admin_add">Add</span>
                                 </button>
                             </div>
                             <div id="materialsList" class="options-list">
@@ -467,8 +465,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Description *</label>
+                        <label data-i18n="product_description">Description *</label>
                         <textarea id="productDescription" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="product_description_zh">Chinese Description (optional)</label>
+                        <textarea id="productDescriptionZh" rows="4"></textarea>
                     </div>
 
                     <input type="hidden" id="productId">
@@ -530,6 +533,8 @@
     <script src="config.js"></script>
     <!-- Supabase Client Configuration -->
     <script src="supabase-client.js"></script>
+    <!-- Internationalization (i18n) -->
+    <script src="i18n.js"></script>
     <!-- Main Application Script -->
     <script src="script.js"></script>
 </body>
