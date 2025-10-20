@@ -122,14 +122,12 @@ BEGIN
     END IF;
 END $$;
 
--- Step 12: Add foreign key constraints
+-- Step 12: Data integrity note
 -- Note: We keep category and material as TEXT for flexibility
--- but add check constraints to ensure they reference valid options
-ALTER TABLE products ADD CONSTRAINT products_category_fkey
-    CHECK (EXISTS (SELECT 1 FROM categories WHERE name = category));
-
-ALTER TABLE products ADD CONSTRAINT products_material_fkey
-    CHECK (EXISTS (SELECT 1 FROM materials WHERE name = material));
+-- Data integrity is enforced at the application layer through:
+-- 1. Dynamic loading of options from categories/materials tables
+-- 2. Delete protection that checks if products use the option
+-- 3. Form validation that only allows existing options
 
 -- Step 13: Create indexes for better query performance
 CREATE INDEX IF NOT EXISTS idx_categories_name ON categories(name);
