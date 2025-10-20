@@ -15,18 +15,7 @@
 -- STEP 0: CLEANUP (Remove any previous failed attempts)
 -- ============================================================
 
--- Drop existing policies if they exist
-DROP POLICY IF EXISTS "Anyone can view categories" ON categories;
-DROP POLICY IF EXISTS "Anyone can insert categories" ON categories;
-DROP POLICY IF EXISTS "Anyone can update categories" ON categories;
-DROP POLICY IF EXISTS "Anyone can delete categories" ON categories;
-
-DROP POLICY IF EXISTS "Anyone can view materials" ON materials;
-DROP POLICY IF EXISTS "Anyone can insert materials" ON materials;
-DROP POLICY IF EXISTS "Anyone can update materials" ON materials;
-DROP POLICY IF EXISTS "Anyone can delete materials" ON materials;
-
--- Drop existing tables if they exist
+-- Drop existing tables if they exist (CASCADE will automatically drop policies)
 DROP TABLE IF EXISTS categories CASCADE;
 DROP TABLE IF EXISTS materials CASCADE;
 
@@ -37,7 +26,7 @@ ALTER TABLE products DROP CONSTRAINT IF EXISTS products_finish_check;
 ALTER TABLE products DROP CONSTRAINT IF EXISTS products_category_check;
 ALTER TABLE products DROP CONSTRAINT IF EXISTS products_material_check;
 
--- Drop old indexes
+-- Drop old indexes if they exist
 DROP INDEX IF EXISTS idx_products_finish;
 DROP INDEX IF EXISTS idx_categories_name;
 DROP INDEX IF EXISTS idx_materials_name;
