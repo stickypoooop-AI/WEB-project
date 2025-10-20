@@ -194,7 +194,10 @@ body {
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, #003366 0%, #004488 100%);
+    background: linear-gradient(rgba(0, 51, 102, 0.75), rgba(0, 68, 136, 0.75)), url('Rotary-Bearing-Feature.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: var(--white);
     padding: 6rem 0;
     text-align: center;
