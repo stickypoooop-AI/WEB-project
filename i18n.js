@@ -57,6 +57,8 @@ const i18n = {
             product_specifications: 'Specifications',
             product_quantity: 'Quantity:',
             product_add_cart: 'Add to Enquiry Cart',
+            product_unit_price: 'Unit Price',
+            product_subtotal: 'Subtotal',
 
             // Contact Section
             contact_title: 'Contact Us',
@@ -82,6 +84,8 @@ const i18n = {
             cart_proceed: 'Send Enquiry',
             cart_empty: 'Your enquiry cart is empty',
             cart_quantity: 'Quantity:',
+            cart_item_remove: 'Remove',
+            cart_view: 'View Cart',
 
             // Enquiry Modal
             enquiry_title: 'Send Enquiry',
@@ -224,6 +228,8 @@ const i18n = {
             product_specifications: '规格',
             product_quantity: '数量：',
             product_add_cart: '添加至询价购物车',
+            product_unit_price: '单价',
+            product_subtotal: '小计',
 
             // Contact Section
             contact_title: '联系我们',
@@ -249,6 +255,8 @@ const i18n = {
             cart_proceed: '发送询价',
             cart_empty: '您的询价购物车是空的',
             cart_quantity: '数量：',
+            cart_item_remove: '移除',
+            cart_view: '查看购物车',
 
             // Enquiry Modal
             enquiry_title: '发送询价',

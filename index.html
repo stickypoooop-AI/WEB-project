@@ -161,37 +161,37 @@
     <section id="contact" class="contact-section">
         <div class="container">
             <div class="section-header">
-                <h2>Contact Us</h2>
-                <p>Get in touch for quotes, inquiries, or support</p>
+                <h2 data-i18n="contact_title">Contact Us</h2>
+                <p data-i18n="contact_subtitle">Get in touch for quotes, inquiries, or support</p>
             </div>
             <div class="contact-grid">
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-map-marker-alt"></i>
                         <div>
-                            <h4>Address</h4>
-                            <p>No. 96 Huaide South Road, Zhonglou District<br>Changzhou, China</p>
+                            <h4 data-i18n="contact_address">Address</h4>
+                            <p data-i18n-html="contact_address_detail">No. 96 Huaide South Road, Zhonglou District<br>Changzhou, China</p>
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-phone"></i>
                         <div>
-                            <h4>Phone</h4>
+                            <h4 data-i18n="contact_phone">Phone</h4>
                             <p>0404693189</p>
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
                         <div>
-                            <h4>Email</h4>
+                            <h4 data-i18n="contact_email">Email</h4>
                             <p>zhangyanbin_1@hotmail.com</p>
                         </div>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-clock"></i>
                         <div>
-                            <h4>Business Hours</h4>
-                            <p>Monday - Friday: 8:00 AM - 6:00 PM<br>Saturday: 9:00 AM - 2:00 PM</p>
+                            <h4 data-i18n="contact_hours">Business Hours</h4>
+                            <p data-i18n-html="contact_hours_detail">Monday - Friday: 8:00 AM - 6:00 PM<br>Saturday: 9:00 AM - 2:00 PM</p>
                         </div>
                     </div>
                 </div>
@@ -205,22 +205,22 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>NaxiWell Industrial</h4>
-                    <p>Your trusted partner for quality hardware solutions since 2015.</p>
+                    <p data-i18n="footer_tagline">Your trusted partner for quality hardware solutions since 2015.</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <a href="#products">Products</a>
-                    <a href="#contact">Contact</a>
+                    <h4 data-i18n="footer_quick_links">Quick Links</h4>
+                    <a href="#products" data-i18n="nav_products">Products</a>
+                    <a href="#contact" data-i18n="nav_contact">Contact</a>
                 </div>
                 <div class="footer-section">
-                    <h4>Categories</h4>
+                    <h4 data-i18n="footer_categories">Categories</h4>
                     <a href="#products">Screws</a>
                     <a href="#products">Bolts</a>
                     <a href="#products">Nuts</a>
                     <a href="#products">Washers</a>
                 </div>
                 <div class="footer-section">
-                    <h4>Follow Us</h4>
+                    <h4 data-i18n="footer_follow">Follow Us</h4>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
@@ -230,7 +230,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 NaxiWell Industrial. All rights reserved.</p>
+                <p data-i18n="footer_copyright">&copy; 2025 NaxiWell Industrial. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -239,18 +239,18 @@
     <div id="cartModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Your Enquiry Cart</h3>
+                <h3 data-i18n="cart_title">Your Enquiry Cart</h3>
                 <button class="close-btn" id="closeCart">&times;</button>
             </div>
             <div class="modal-body">
                 <div id="cartItems"></div>
                 <div class="cart-total">
-                    <strong>Total Items: <span id="totalItems">0</span></strong>
+                    <strong><span data-i18n="cart_total_items">Total Items:</span> <span id="totalItems">0</span></strong>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" id="closeCart2">Continue Shopping</button>
-                <button class="btn btn-primary" id="proceedEnquiry">Send Enquiry</button>
+                <button class="btn btn-secondary" id="closeCart2" data-i18n="cart_continue">Continue Shopping</button>
+                <button class="btn btn-primary" id="proceedEnquiry" data-i18n="cart_proceed">Send Enquiry</button>
             </div>
         </div>
     </div>
@@ -259,44 +259,44 @@
     <div id="enquiryModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Send Enquiry</h3>
+                <h3 data-i18n="enquiry_title">Send Enquiry</h3>
                 <button class="close-btn" id="closeEnquiry">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="enquiryForm">
                     <div class="form-group">
-                        <label>Full Name *</label>
+                        <label data-i18n="enquiry_name">Full Name</label> <span data-i18n="enquiry_required">*</span>
                         <input type="text" id="customerName" required>
                     </div>
                     <div class="form-group">
-                        <label>Company Name</label>
+                        <label data-i18n="enquiry_company">Company Name</label>
                         <input type="text" id="companyName">
                     </div>
                     <div class="form-group">
-                        <label>Email *</label>
+                        <label data-i18n="enquiry_email">Email</label> <span data-i18n="enquiry_required">*</span>
                         <input type="email" id="customerEmail" required>
                     </div>
                     <div class="form-group">
-                        <label>Phone *</label>
+                        <label data-i18n="enquiry_phone">Phone</label> <span data-i18n="enquiry_required">*</span>
                         <input type="tel" id="customerPhone" required>
                     </div>
                     <div class="form-group">
-                        <label>Address</label>
+                        <label data-i18n="enquiry_address">Address</label>
                         <textarea id="customerAddress" rows="3"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Additional Notes</label>
+                        <label data-i18n="enquiry_notes">Additional Notes</label>
                         <textarea id="additionalNotes" rows="4"></textarea>
                     </div>
                     <div class="enquiry-summary">
-                        <h4>Selected Products</h4>
+                        <h4 data-i18n="enquiry_products">Selected Products</h4>
                         <div id="enquirySummary"></div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" id="closeEnquiry2">Cancel</button>
-                <button class="btn btn-primary" id="submitEnquiry">Submit Enquiry</button>
+                <button class="btn btn-secondary" id="closeEnquiry2" data-i18n="enquiry_cancel">Cancel</button>
+                <button class="btn btn-primary" id="submitEnquiry" data-i18n="enquiry_submit">Submit Enquiry</button>
             </div>
         </div>
     </div>
@@ -305,20 +305,20 @@
     <div id="adminLoginModal" class="modal">
         <div class="modal-content modal-small">
             <div class="modal-header">
-                <h3>Admin Access</h3>
+                <h3 data-i18n="admin_login_title">Admin Access</h3>
                 <button class="close-btn" id="closeAdminLogin">&times;</button>
             </div>
             <div class="modal-body">
-                <p class="admin-login-desc">Enter your 32-character admin key to access the management dashboard</p>
+                <p class="admin-login-desc" data-i18n="admin_login_desc">Enter your 32-character admin key to access the management dashboard</p>
                 <div class="form-group">
-                    <label>Admin Key</label>
-                    <input type="password" id="adminKeyInput" placeholder="Enter 32-character key" maxlength="32">
+                    <label data-i18n="admin_login_key">Admin Key</label>
+                    <input type="password" id="adminKeyInput" data-i18n="admin_login_placeholder" placeholder="Enter 32-character key" maxlength="32">
                 </div>
                 <div id="adminLoginError" class="error-message"></div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" id="cancelAdminLogin">Cancel</button>
-                <button class="btn btn-primary" id="submitAdminLogin">Login</button>
+                <button class="btn btn-secondary" id="cancelAdminLogin" data-i18n="enquiry_cancel">Cancel</button>
+                <button class="btn btn-primary" id="submitAdminLogin" data-i18n="admin_login_btn">Login</button>
             </div>
         </div>
     </div>
@@ -329,10 +329,10 @@
             <div class="admin-header">
                 <div class="admin-logo">
                     <i class="fas fa-tools"></i>
-                    <span>Admin Dashboard</span>
+                    <span data-i18n="admin_dashboard_title">Admin Dashboard</span>
                 </div>
                 <button class="btn btn-secondary" id="logoutBtn">
-                    <i class="fas fa-sign-out-alt"></i> Logout
+                    <i class="fas fa-sign-out-alt"></i> <span data-i18n="admin_logout">Logout</span>
                 </button>
             </div>
 
@@ -340,7 +340,7 @@
                 <!-- Category & Material Management Section -->
                 <div class="admin-section">
                     <div class="admin-section-header">
-                        <h2>Category & Material Management</h2>
+                        <h2 data-i18n="admin_category_title">Category & Material Management</h2>
                     </div>
                     <div class="options-management">
                         <!-- Categories -->
@@ -380,16 +380,16 @@
                 <!-- Product Management Section -->
                 <div class="admin-section">
                     <div class="admin-section-header">
-                        <h2>Product Management</h2>
+                        <h2 data-i18n="admin_products_title">Product Management</h2>
                         <button class="btn btn-primary" id="addProductBtn">
-                            <i class="fas fa-plus"></i> Add New Product
+                            <i class="fas fa-plus"></i> <span data-i18n="admin_add_product">Add New Product</span>
                         </button>
                     </div>
 
                     <!-- Admin Search -->
                     <div class="admin-search-box">
                         <i class="fas fa-search"></i>
-                        <input type="text" id="adminSearchInput" placeholder="Search products by name, category, material, size, price...">
+                        <input type="text" id="adminSearchInput" data-i18n="admin_search_placeholder" placeholder="Search products by name, category, material, size, price...">
                     </div>
 
                     <div id="adminProductsTable" class="admin-products-table">
@@ -404,20 +404,20 @@
     <div id="productFormModal" class="modal">
         <div class="modal-content modal-large">
             <div class="modal-header">
-                <h3 id="productFormTitle">Add New Product</h3>
+                <h3 id="productFormTitle" data-i18n="product_form_add">Add New Product</h3>
                 <button class="close-btn" id="closeProductForm">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="productForm">
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Product Name *</label>
+                            <label data-i18n="product_name">Product Name</label> <span data-i18n="enquiry_required">*</span>
                             <input type="text" id="productName" required>
                         </div>
                         <div class="form-group">
-                            <label>Category *</label>
+                            <label data-i18n="product_category_select">Category</label> <span data-i18n="enquiry_required">*</span>
                             <select id="productCategory" required>
-                                <option value="">Select Category</option>
+                                <option value="" data-i18n="product_select_category">Select Category</option>
                                 <!-- Options will be loaded dynamically from database -->
                             </select>
                         </div>
@@ -425,9 +425,9 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Material *</label>
+                            <label data-i18n="product_material_select">Material</label> <span data-i18n="enquiry_required">*</span>
                             <select id="productMaterial" required>
-                                <option value="">Select Material</option>
+                                <option value="" data-i18n="product_select_material">Select Material</option>
                                 <!-- Options will be loaded dynamically from database -->
                             </select>
                         </div>
@@ -435,37 +435,37 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Price ($) *</label>
+                            <label data-i18n="product_price">Price ($)</label> <span data-i18n="enquiry_required">*</span>
                             <input type="number" id="productPrice" step="0.01" min="0" required>
                         </div>
                         <div class="form-group">
-                            <label>Size *</label>
-                            <input type="text" id="productSize" placeholder="e.g., M6 x 40mm" required>
+                            <label data-i18n="product_size_label">Size</label> <span data-i18n="enquiry_required">*</span>
+                            <input type="text" id="productSize" data-i18n="product_size_placeholder" placeholder="e.g., M6 x 40mm" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Product Image *</label>
+                        <label data-i18n="product_image">Product Image</label> <span data-i18n="enquiry_required">*</span>
                         <div class="image-upload-container">
                             <input type="file" id="productImageFile" accept="image/png,image/jpeg,image/jpg,image/webp" style="display: none;">
                             <button type="button" class="btn btn-secondary" id="selectImageBtn">
-                                <i class="fas fa-upload"></i> Choose Image
+                                <i class="fas fa-upload"></i> <span data-i18n="product_image_choose">Choose Image</span>
                             </button>
                             <span id="imageFileName" style="margin-left: 10px; color: var(--text-gray);"></span>
                             <div id="imagePreview" style="margin-top: 10px; display: none;">
                                 <img id="previewImg" style="max-width: 200px; max-height: 200px; border: 1px solid var(--border-color); border-radius: 4px;" alt="Preview">
                                 <button type="button" class="btn btn-danger btn-small" id="removeImageBtn" style="display: block; margin-top: 5px;">
-                                    <i class="fas fa-times"></i> Remove Image
+                                    <i class="fas fa-times"></i> <span data-i18n="product_image_remove">Remove Image</span>
                                 </button>
                             </div>
-                            <small style="display: block; margin-top: 5px; color: var(--text-gray);">
+                            <small style="display: block; margin-top: 5px; color: var(--text-gray);" data-i18n="product_image_format">
                                 Supported formats: PNG, JPG, JPEG, WebP (Max 20MB)
                             </small>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label data-i18n="product_description">Description *</label>
+                        <label data-i18n="product_description">Description</label> <span data-i18n="enquiry_required">*</span>
                         <textarea id="productDescription" rows="4" required></textarea>
                     </div>
 
@@ -479,8 +479,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" id="cancelProductForm">Cancel</button>
-                <button class="btn btn-primary" id="saveProduct">Save Product</button>
+                <button class="btn btn-secondary" id="cancelProductForm" data-i18n="product_cancel">Cancel</button>
+                <button class="btn btn-primary" id="saveProduct" data-i18n="product_save">Save Product</button>
             </div>
         </div>
     </div>
@@ -500,19 +500,19 @@
                     <div class="product-info-section">
                         <div class="product-price" id="modalProductPrice"></div>
                         <div class="product-specs">
-                            <h4>Specifications</h4>
+                            <h4 data-i18n="product_specifications">Specifications</h4>
                             <div id="modalProductSpecs"></div>
                         </div>
                         <div class="product-description" id="modalProductDescription"></div>
                         <div class="quantity-selector">
-                            <label>Quantity:</label>
+                            <label data-i18n="product_quantity">Quantity:</label>
                             <div class="quantity-controls">
                                 <button class="qty-btn" id="decreaseQty">-</button>
                                 <input type="number" id="quantityInput" value="1" min="1">
                                 <button class="qty-btn" id="increaseQty">+</button>
                             </div>
                         </div>
-                        <button class="btn btn-primary btn-large" id="addToCartBtn">Add to Enquiry Cart</button>
+                        <button class="btn btn-primary btn-large" id="addToCartBtn" data-i18n="product_add_cart">Add to Enquiry Cart</button>
                     </div>
                 </div>
             </div>
