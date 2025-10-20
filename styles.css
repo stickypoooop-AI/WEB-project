@@ -1228,3 +1228,113 @@ body {
         padding: 0.5rem;
     }
 }
+
+/* Category & Material Management Styles */
+.options-management {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.options-group {
+    background: var(--light-gray);
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.options-group h3 {
+    margin: 0 0 1rem 0;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.options-add {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.options-add input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.option-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+
+.option-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.option-item-name {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.option-item-display {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+}
+
+.option-item button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+}
+
+/* Admin Search Box */
+.admin-search-box {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.admin-search-box i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-gray);
+}
+
+.admin-search-box input {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 2.8rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.admin-search-box input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Responsive adjustments for new elements */
+@media (max-width: 768px) {
+    .options-management {
+        grid-template-columns: 1fr;
+    }
+
+    .options-add {
+        flex-direction: column;
+    }
+}

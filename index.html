@@ -152,16 +152,6 @@
                                 <option value="te-gcr">Te & Gcr</option>
                             </select>
                         </div>
-                        <div class="filter-group">
-                            <label>Finish</label>
-                            <select id="finishFilter">
-                                <option value="">All Finishes</option>
-                                <option value="zinc-plated">Zinc Plated</option>
-                                <option value="black-oxide">Black Oxide</option>
-                                <option value="plain">Plain</option>
-                                <option value="galvanized">Galvanized</option>
-                            </select>
-                        </div>
                         <button class="btn btn-secondary btn-small" id="clearFilters">Clear Filters</button>
                     </div>
                 </aside>
@@ -371,12 +361,57 @@
             </div>
 
             <div class="admin-content">
+                <!-- Category & Material Management Section -->
+                <div class="admin-section">
+                    <div class="admin-section-header">
+                        <h2>Category & Material Management</h2>
+                    </div>
+                    <div class="options-management">
+                        <!-- Categories -->
+                        <div class="options-group">
+                            <h3>Categories</h3>
+                            <div class="options-add">
+                                <input type="text" id="newCategoryName" placeholder="Category name (e.g., screws)">
+                                <input type="text" id="newCategoryDisplay" placeholder="Display name (e.g., Screws)">
+                                <button class="btn btn-primary btn-small" onclick="addCategory()">
+                                    <i class="fas fa-plus"></i> Add
+                                </button>
+                            </div>
+                            <div id="categoriesList" class="options-list">
+                                <!-- Categories will be loaded here -->
+                            </div>
+                        </div>
+
+                        <!-- Materials -->
+                        <div class="options-group">
+                            <h3>Materials</h3>
+                            <div class="options-add">
+                                <input type="text" id="newMaterialName" placeholder="Material name (e.g., stainless-steel)">
+                                <input type="text" id="newMaterialDisplay" placeholder="Display name (e.g., Stainless Steel)">
+                                <button class="btn btn-primary btn-small" onclick="addMaterial()">
+                                    <i class="fas fa-plus"></i> Add
+                                </button>
+                            </div>
+                            <div id="materialsList" class="options-list">
+                                <!-- Materials will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Management Section -->
                 <div class="admin-section">
                     <div class="admin-section-header">
                         <h2>Product Management</h2>
                         <button class="btn btn-primary" id="addProductBtn">
                             <i class="fas fa-plus"></i> Add New Product
                         </button>
+                    </div>
+
+                    <!-- Admin Search -->
+                    <div class="admin-search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="adminSearchInput" placeholder="Search products by name, category, material, size, price...">
                     </div>
 
                     <div id="adminProductsTable" class="admin-products-table">
@@ -405,13 +440,7 @@
                             <label>Category *</label>
                             <select id="productCategory" required>
                                 <option value="">Select Category</option>
-                                <option value="screws">Screws</option>
-                                <option value="bolts">Bolts</option>
-                                <option value="nuts">Nuts</option>
-                                <option value="washers">Washers</option>
-                                <option value="anchors">Anchors</option>
-                                <option value="rivets">Rivets</option>
-                                <option value="one-way-clutch">One Way Clutch</option>
+                                <!-- Options will be loaded dynamically from database -->
                             </select>
                         </div>
                     </div>
@@ -421,21 +450,7 @@
                             <label>Material *</label>
                             <select id="productMaterial" required>
                                 <option value="">Select Material</option>
-                                <option value="stainless-steel">Stainless Steel</option>
-                                <option value="carbon-steel">Carbon Steel</option>
-                                <option value="brass">Brass</option>
-                                <option value="aluminum">Aluminum</option>
-                                <option value="te-gcr">Te & Gcr</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Finish *</label>
-                            <select id="productFinish" required>
-                                <option value="">Select Finish</option>
-                                <option value="zinc-plated">Zinc Plated</option>
-                                <option value="black-oxide">Black Oxide</option>
-                                <option value="plain">Plain</option>
-                                <option value="galvanized">Galvanized</option>
+                                <!-- Options will be loaded dynamically from database -->
                             </select>
                         </div>
                     </div>

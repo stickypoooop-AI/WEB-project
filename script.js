@@ -7,6 +7,10 @@ const ADMIN_SESSION_KEY = 'admin_authenticated';
 // Products will be loaded from Supabase
 let productsData = null;
 
+// Categories and Materials will be loaded from Supabase
+let categoriesData = [];
+let materialsData = [];
+
 // Default Product Database
 const defaultProducts = [
     // Screws
@@ -301,7 +305,6 @@ async function loadProductsFromDB() {
             name: p.name,
             category: p.category,
             material: p.material,
-            finish: p.finish,
             price: parseFloat(p.price),
             size: p.size,
             description: p.description,
@@ -315,13 +318,34 @@ async function loadProductsFromDB() {
     }
 }
 
+async function loadCategoriesFromDB() {
+    try {
+        categoriesData = await db.categories.getAll();
+        updateCategoryOptions();
+    } catch (error) {
+        console.error('Error loading categories:', error);
+    }
+}
+
+async function loadMaterialsFromDB() {
+    try {
+        materialsData = await db.materials.getAll();
+        updateMaterialOptions();
+    } catch (error) {
+        console.error('Error loading materials:', error);
+    }
+}
+
 // State Management
 let cart = [];
 let currentCategory = 'all';
-let currentFilters = { material: '', finish: '' };
+let currentFilters = { material: '' };
 let currentSort = 'name';
 let searchQuery = '';
 let selectedProduct = null;
+
+// Admin search state
+let adminSearchQuery = '';
 
 // Enquiry submission throttle (30 seconds cooldown)
 const ENQUIRY_COOLDOWN_MS = 30000;
@@ -334,8 +358,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateCartCount();
     checkAdminSession();
 
-    // Load products from Supabase
-    await loadProductsFromDB();
+    // Load data from Supabase
+    await Promise.all([
+        loadProductsFromDB(),
+        loadCategoriesFromDB(),
+        loadMaterialsFromDB()
+    ]);
 });
 
 // Event Listeners
@@ -367,15 +395,9 @@ function initializeEventListeners() {
         renderProducts();
     });
 
-    document.getElementById('finishFilter').addEventListener('change', (e) => {
-        currentFilters.finish = e.target.value;
-        renderProducts();
-    });
-
     document.getElementById('clearFilters').addEventListener('click', () => {
-        currentFilters = { material: '', finish: '' };
+        currentFilters = { material: '' };
         document.getElementById('materialFilter').value = '';
-        document.getElementById('finishFilter').value = '';
         renderProducts();
     });
 
@@ -435,21 +457,17 @@ function renderProducts() {
         // Material filter
         if (currentFilters.material && product.material !== currentFilters.material) return false;
 
-        // Finish filter
-        if (currentFilters.finish && product.finish !== currentFilters.finish) return false;
-
         // Smart search filter - search all fields with normalization
         if (searchQuery) {
             const normalizedQuery = normalizeText(searchQuery);
 
-            // All searchable fields including ID, name, size, category, material, finish, description, price
+            // All searchable fields including ID, name, size, category, material, description, price
             const searchableFields = [
                 product.id.toString(),
                 product.name,
                 product.size,
                 product.category,
                 product.material,
-                product.finish,
                 product.description,
                 product.price.toString()
             ];
@@ -492,7 +510,7 @@ function renderProducts() {
             <span class="product-category">${product.category}</span>
             <h3 class="product-name">${product.name}</h3>
             <div class="product-specs">
-                ${product.size} | ${formatMaterial(product.material)} | ${formatFinish(product.finish)}
+                ${product.size} | ${formatMaterial(product.material)}
             </div>
             <div class="product-price">$${product.price.toFixed(2)}</div>
         </div>
@@ -502,10 +520,6 @@ function renderProducts() {
 // Format helper functions
 function formatMaterial(material) {
     return material.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-}
-
-function formatFinish(finish) {
-    return finish.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
 
 // Smart search normalization function
@@ -540,10 +554,6 @@ function openProductModal(productId) {
         <div class="spec-item">
             <span class="spec-label">Material:</span>
             <span class="spec-value">${formatMaterial(selectedProduct.material)}</span>
-        </div>
-        <div class="spec-item">
-            <span class="spec-label">Finish:</span>
-            <span class="spec-value">${formatFinish(selectedProduct.finish)}</span>
         </div>
     `;
 
@@ -648,7 +658,7 @@ function renderEnquirySummary() {
         <div class="enquiry-item">
             <strong>${item.name}</strong><br>
             Quantity: ${item.quantity} | Unit Price: $${item.price.toFixed(2)} | Total: $${(item.price * item.quantity).toFixed(2)}<br>
-            Specs: ${item.size} | ${formatMaterial(item.material)} | ${formatFinish(item.finish)}
+            Specs: ${item.size} | ${formatMaterial(item.material)}
         </div>
     `).join('');
 
@@ -707,7 +717,7 @@ async function submitEnquiry() {
             name: item.name,
             quantity: item.quantity,
             price: item.price,
-            specs: `${item.size} | ${item.material} | ${item.finish}`
+            specs: `${item.size} | ${item.material}`
         })),
         notes: document.getElementById('additionalNotes').value?.trim() || null
     };
@@ -725,7 +735,7 @@ async function submitEnquiry() {
 
         // Prepare email template parameters
         const productsListForEmail = cart.map(item =>
-            `${item.name}\n  - 数量/Quantity: ${item.quantity}\n  - 单价/Unit Price: $${item.price.toFixed(2)}\n  - 小计/Subtotal: $${(item.price * item.quantity).toFixed(2)}\n  - 规格/Specs: ${item.size} | ${formatMaterial(item.material)} | ${formatFinish(item.finish)}`
+            `${item.name}\n  - 数量/Quantity: ${item.quantity}\n  - 单价/Unit Price: $${item.price.toFixed(2)}\n  - 小计/Subtotal: $${(item.price * item.quantity).toFixed(2)}\n  - 规格/Specs: ${item.size} | ${formatMaterial(item.material)}`
         ).join('\n\n');
 
         const emailParams = {
@@ -856,55 +866,6 @@ function logoutAdmin() {
     hideAdminDashboard();
 }
 
-function renderAdminProducts() {
-    const tableContainer = document.getElementById('adminProductsTable');
-
-    if (products.length === 0) {
-        tableContainer.innerHTML = '<p style="text-align: center; color: var(--text-gray); padding: 2rem;">No products available. Click "Add New Product" to get started.</p>';
-        return;
-    }
-
-    const tableHTML = `
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Material</th>
-                    <th>Size</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${products.map(product => `
-                    <tr>
-                        <td><img src="${product.image}" class="product-img-small" alt="${product.name}"></td>
-                        <td>${product.name}</td>
-                        <td>${formatMaterial(product.category)}</td>
-                        <td>$${product.price.toFixed(2)}</td>
-                        <td>${formatMaterial(product.material)}</td>
-                        <td>${product.size}</td>
-                        <td>
-                            <div class="admin-actions">
-                                <button class="btn btn-edit btn-icon btn-small" onclick="editProduct('${product.id}')">
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
-                                <button class="btn btn-danger btn-icon btn-small" onclick="deleteProduct('${product.id}')">
-                                    <i class="fas fa-trash"></i> Delete
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-    `;
-
-    tableContainer.innerHTML = tableHTML;
-}
-
 function openProductForm(productId = null) {
     const modal = document.getElementById('productFormModal');
     const form = document.getElementById('productForm');
@@ -921,7 +882,6 @@ function openProductForm(productId = null) {
             document.getElementById('productName').value = product.name;
             document.getElementById('productCategory').value = product.category;
             document.getElementById('productMaterial').value = product.material;
-            document.getElementById('productFinish').value = product.finish;
             document.getElementById('productPrice').value = product.price;
             document.getElementById('productSize').value = product.size;
             document.getElementById('productDescription').value = product.description;
@@ -986,7 +946,6 @@ async function saveProduct() {
             name: document.getElementById('productName').value,
             category: document.getElementById('productCategory').value,
             material: document.getElementById('productMaterial').value,
-            finish: document.getElementById('productFinish').value,
             price: parseFloat(document.getElementById('productPrice').value),
             size: document.getElementById('productSize').value,
             image: imageUrl,
@@ -1072,6 +1031,15 @@ function initializeAdminListeners() {
     // Add product button
     document.getElementById('addProductBtn').addEventListener('click', () => openProductForm());
 
+    // Admin search
+    const adminSearchInput = document.getElementById('adminSearchInput');
+    if (adminSearchInput) {
+        adminSearchInput.addEventListener('input', (e) => {
+            adminSearchQuery = e.target.value.toLowerCase();
+            renderAdminProducts();
+        });
+    }
+
     // Product form modal
     document.getElementById('closeProductForm').addEventListener('click', closeProductForm);
     document.getElementById('cancelProductForm').addEventListener('click', closeProductForm);
@@ -1130,8 +1098,264 @@ function removeSelectedImage() {
     document.getElementById('previewImg').src = '';
 }
 
+// ============================================================
+// Category and Material Management Functions
+// ============================================================
+
+function updateCategoryOptions() {
+    // Update product form dropdown
+    const categorySelect = document.getElementById('productCategory');
+    if (categorySelect) {
+        const currentValue = categorySelect.value;
+        categorySelect.innerHTML = '<option value="">Select Category</option>' +
+            categoriesData.map(cat => `<option value="${cat.name}">${cat.display_name}</option>`).join('');
+        if (currentValue) categorySelect.value = currentValue;
+    }
+
+    // Update categories list in admin
+    renderCategoriesList();
+}
+
+function updateMaterialOptions() {
+    // Update product form dropdown
+    const materialSelect = document.getElementById('productMaterial');
+    if (materialSelect) {
+        const currentValue = materialSelect.value;
+        materialSelect.innerHTML = '<option value="">Select Material</option>' +
+            materialsData.map(mat => `<option value="${mat.name}">${mat.display_name}</option>`).join('');
+        if (currentValue) materialSelect.value = currentValue;
+    }
+
+    // Update materials list in admin
+    renderMaterialsList();
+}
+
+function renderCategoriesList() {
+    const container = document.getElementById('categoriesList');
+    if (!container) return;
+
+    if (categoriesData.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-gray); text-align: center;">No categories available</p>';
+        return;
+    }
+
+    container.innerHTML = categoriesData.map(cat => `
+        <div class="option-item">
+            <div class="option-item-info">
+                <div class="option-item-name">${cat.name}</div>
+                <div class="option-item-display">${cat.display_name}</div>
+            </div>
+            <button class="btn btn-danger btn-small" onclick="deleteCategory('${cat.id}', '${cat.name}')">
+                <i class="fas fa-trash"></i> Delete
+            </button>
+        </div>
+    `).join('');
+}
+
+function renderMaterialsList() {
+    const container = document.getElementById('materialsList');
+    if (!container) return;
+
+    if (materialsData.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-gray); text-align: center;">No materials available</p>';
+        return;
+    }
+
+    container.innerHTML = materialsData.map(mat => `
+        <div class="option-item">
+            <div class="option-item-info">
+                <div class="option-item-name">${mat.name}</div>
+                <div class="option-item-display">${mat.display_name}</div>
+            </div>
+            <button class="btn btn-danger btn-small" onclick="deleteMaterial('${mat.id}', '${mat.name}')">
+                <i class="fas fa-trash"></i> Delete
+            </button>
+        </div>
+    `).join('');
+}
+
+async function addCategory() {
+    const nameInput = document.getElementById('newCategoryName');
+    const displayInput = document.getElementById('newCategoryDisplay');
+
+    const name = nameInput.value.trim();
+    const displayName = displayInput.value.trim();
+
+    if (!name || !displayName) {
+        alert('Please enter both category name and display name');
+        return;
+    }
+
+    try {
+        await db.categories.create({
+            name: name,
+            display_name: displayName
+        });
+
+        // Reload categories
+        await loadCategoriesFromDB();
+
+        // Clear inputs
+        nameInput.value = '';
+        displayInput.value = '';
+
+        alert('✅ Category added successfully!');
+    } catch (error) {
+        console.error('Error adding category:', error);
+        alert('❌ Failed to add category: ' + error.message);
+    }
+}
+
+async function addMaterial() {
+    const nameInput = document.getElementById('newMaterialName');
+    const displayInput = document.getElementById('newMaterialDisplay');
+
+    const name = nameInput.value.trim();
+    const displayName = displayInput.value.trim();
+
+    if (!name || !displayName) {
+        alert('Please enter both material name and display name');
+        return;
+    }
+
+    try {
+        await db.materials.create({
+            name: name,
+            display_name: displayName
+        });
+
+        // Reload materials
+        await loadMaterialsFromDB();
+
+        // Clear inputs
+        nameInput.value = '';
+        displayInput.value = '';
+
+        alert('✅ Material added successfully!');
+    } catch (error) {
+        console.error('Error adding material:', error);
+        alert('❌ Failed to add material: ' + error.message);
+    }
+}
+
+async function deleteCategory(id, name) {
+    if (!confirm(`Are you sure you want to delete the category "${name}"?`)) {
+        return;
+    }
+
+    try {
+        await db.categories.delete(id);
+        await loadCategoriesFromDB();
+        alert('✅ Category deleted successfully!');
+    } catch (error) {
+        console.error('Error deleting category:', error);
+        if (error.message.includes('该选项正在被使用中')) {
+            alert('❌ Cannot delete this category: It is currently being used by products.');
+        } else {
+            alert('❌ Failed to delete category: ' + error.message);
+        }
+    }
+}
+
+async function deleteMaterial(id, name) {
+    if (!confirm(`Are you sure you want to delete the material "${name}"?`)) {
+        return;
+    }
+
+    try {
+        await db.materials.delete(id);
+        await loadMaterialsFromDB();
+        alert('✅ Material deleted successfully!');
+    } catch (error) {
+        console.error('Error deleting material:', error);
+        if (error.message.includes('该选项正在被使用中')) {
+            alert('❌ Cannot delete this material: It is currently being used by products.');
+        } else {
+            alert('❌ Failed to delete material: ' + error.message);
+        }
+    }
+}
+
+// ============================================================
+// Admin Search Functionality
+// ============================================================
+
+function renderAdminProducts() {
+    const tableContainer = document.getElementById('adminProductsTable');
+
+    // Filter products based on admin search
+    let filteredProducts = products;
+    if (adminSearchQuery) {
+        const normalizedQuery = normalizeText(adminSearchQuery);
+        filteredProducts = products.filter(product => {
+            const searchableFields = [
+                product.id.toString(),
+                product.name,
+                product.size,
+                product.category,
+                product.material,
+                product.description,
+                product.price.toString()
+            ];
+
+            return searchableFields.some(field =>
+                normalizeText(field).includes(normalizedQuery)
+            );
+        });
+    }
+
+    if (filteredProducts.length === 0) {
+        tableContainer.innerHTML = '<p style="text-align: center; color: var(--text-gray); padding: 2rem;">No products found.</p>';
+        return;
+    }
+
+    const tableHTML = `
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Material</th>
+                    <th>Size</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${filteredProducts.map(product => `
+                    <tr>
+                        <td><img src="${product.image}" class="product-img-small" alt="${product.name}"></td>
+                        <td>${product.name}</td>
+                        <td>${formatMaterial(product.category)}</td>
+                        <td>$${product.price.toFixed(2)}</td>
+                        <td>${formatMaterial(product.material)}</td>
+                        <td>${product.size}</td>
+                        <td>
+                            <div class="admin-actions">
+                                <button class="btn btn-edit btn-icon btn-small" onclick="editProduct('${product.id}')">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-danger btn-icon btn-small" onclick="deleteProduct('${product.id}')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+
+    tableContainer.innerHTML = tableHTML;
+}
+
 // Expose functions to global scope for onclick handlers
 window.openProductModal = openProductModal;
 window.removeFromCart = removeFromCart;
 window.editProduct = editProduct;
 window.deleteProduct = deleteProduct;
+window.addCategory = addCategory;
+window.addMaterial = addMaterial;
+window.deleteCategory = deleteCategory;
+window.deleteMaterial = deleteMaterial;

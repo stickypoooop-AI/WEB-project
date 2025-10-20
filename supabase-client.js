@@ -137,5 +137,99 @@ const db = {
             if (error) throw error;
             return data;
         }
+    },
+
+    // Categories operations
+    categories: {
+        async getAll() {
+            const { data, error } = await supabaseClient
+                .from('categories')
+                .select('*')
+                .order('display_name', { ascending: true });
+
+            if (error) throw error;
+            return data;
+        },
+
+        async create(categoryData) {
+            const { data, error } = await supabaseClient
+                .from('categories')
+                .insert([categoryData])
+                .select()
+                .single();
+
+            if (error) throw error;
+            return data;
+        },
+
+        async delete(id) {
+            // First check if any products use this category
+            const { data: products, error: checkError } = await supabaseClient
+                .from('products')
+                .select('id')
+                .eq('category', id)
+                .limit(1);
+
+            if (checkError) throw checkError;
+
+            if (products && products.length > 0) {
+                throw new Error('该选项正在被使用中');
+            }
+
+            const { error } = await supabaseClient
+                .from('categories')
+                .delete()
+                .eq('id', id);
+
+            if (error) throw error;
+            return true;
+        }
+    },
+
+    // Materials operations
+    materials: {
+        async getAll() {
+            const { data, error } = await supabaseClient
+                .from('materials')
+                .select('*')
+                .order('display_name', { ascending: true });
+
+            if (error) throw error;
+            return data;
+        },
+
+        async create(materialData) {
+            const { data, error } = await supabaseClient
+                .from('materials')
+                .insert([materialData])
+                .select()
+                .single();
+
+            if (error) throw error;
+            return data;
+        },
+
+        async delete(id) {
+            // First check if any products use this material
+            const { data: products, error: checkError } = await supabaseClient
+                .from('products')
+                .select('id')
+                .eq('material', id)
+                .limit(1);
+
+            if (checkError) throw checkError;
+
+            if (products && products.length > 0) {
+                throw new Error('该选项正在被使用中');
+            }
+
+            const { error } = await supabaseClient
+                .from('materials')
+                .delete()
+                .eq('id', id);
+
+            if (error) throw error;
+            return true;
+        }
     }
 };
