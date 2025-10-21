@@ -697,16 +697,18 @@ body {
     background: transparent;
     border: none;
     color: rgba(255, 255, 255, 0.03);
-    font-size: 14px;
-    padding: 8px 12px;
+    font-size: 16px;
+    padding: 10px 15px;
     cursor: pointer;
     opacity: 0.03;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .hidden-admin-btn:hover {
-    opacity: 0.15;
-    color: rgba(255, 255, 255, 0.15);
+    opacity: 1;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
 }
 
 /* Modal Styles */
