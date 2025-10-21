@@ -202,7 +202,7 @@ WEB-project/
 
 ## 📞 Contact
 
-**Company**: Changzhou Niuxiuwei Trading Co., Ltd.
+**Company**: Changzhou New South Wales Trading Co., Ltd. (常州纽修威商贸有限公司)
 **Address**: No. 96 Huaide South Road, Zhonglou District, Changzhou, China
 **Phone**: 0404693189
 **Email**: zhangyanbin_1@hotmail.com
