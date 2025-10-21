@@ -680,10 +680,33 @@ body {
 }
 
 .footer-bottom {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
     padding-top: 2rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.7);
+}
+
+/* Hidden Admin Button */
+.hidden-admin-btn {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.03);
+    font-size: 14px;
+    padding: 8px 12px;
+    cursor: pointer;
+    opacity: 0.03;
+    transition: opacity 0.3s ease;
+}
+
+.hidden-admin-btn:hover {
+    opacity: 0.15;
+    color: rgba(255, 255, 255, 0.15);
 }
 
 /* Modal Styles */
