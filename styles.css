@@ -857,6 +857,11 @@ body {
     color: var(--text-dark);
 }
 
+.form-group label .required {
+    color: #dc3545;
+    margin-left: 2px;
+}
+
 .form-group input,
 .form-group textarea {
     width: 100%;
