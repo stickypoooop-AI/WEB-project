@@ -18,13 +18,14 @@ const i18n = {
             nav_cart: 'Cart',
 
             // Hero Section
-            hero_title: 'NaxiWell Industrial Quality Fasteners & Hardware',
+            hero_title: 'CHANGZHOU NEW SOUTH WALES TRADING Quality Fasteners & Hardware',
             hero_subtitle: 'Your trusted partner for industrial-grade fastening solutions. Quality guaranteed, delivered on time.',
             hero_browse: 'Browse Products',
             hero_contact: 'Contact Sales',
 
             // About Section
-            about_title: 'About NaxiWell Industrial',
+            about_title: 'About CHANGZHOU NEW SOUTH WALES TRADING',
+            company_name: 'CHANGZHOU NEW SOUTH WALES TRADING',
             about_subtitle: 'Industry-leading fastening solutions since 2015',
             about_description: 'Changzhou New South Wales Trading Co., Ltd. is a limited liability company established on 20 Oct 2015 and based at No. 96 Huaide South Road, Zhonglou District, Changzhou, China. Guided by legal representative Ms. Tang Wenting, the company engages in the wholesale and retail of industrial hardware and related materials, including (non-hazardous) packaging and decorative materials, hardware & fasteners, building materials, electrical and lighting supplies, solar-related products, electronic products, machinery & equipment, and auto parts. Where permitted by law, the company may conduct goods and technology import & export (items subject to approval are carried out after obtaining the required licenses).',
             feature_quality_title: 'Quality Assurance',
@@ -75,7 +76,7 @@ const i18n = {
             footer_quick_links: 'Quick Links',
             footer_categories: 'Categories',
             footer_follow: 'Follow Us',
-            footer_copyright: '© 2025 NaxiWell Industrial. All rights reserved.',
+            footer_copyright: '© 2025 CHANGZHOU NEW SOUTH WALES TRADING. All rights reserved.',
 
             // Cart Modal
             cart_title: 'Your Enquiry Cart',
@@ -189,13 +190,14 @@ const i18n = {
             nav_cart: '购物车',
 
             // Hero Section
-            hero_title: 'NaxiWell 工业级优质紧固件和五金',
+            hero_title: '常州纽修威商贸 优质紧固件和五金',
             hero_subtitle: '您值得信赖的工业级紧固解决方案合作伙伴。质量保证，准时交付。',
             hero_browse: '浏览产品',
             hero_contact: '联系销售',
 
             // About Section
-            about_title: '关于 NaxiWell 工业',
+            about_title: '关于常州纽修威商贸',
+            company_name: '常州纽修威商贸',
             about_subtitle: '自2015年以来的行业领先紧固解决方案',
             about_description: '常州纽修威商贸有限公司是一家于2015年10月20日成立的有限责任公司，位于中国常州市钟楼区怀德南路96号。公司由法定代表人唐文婷女士领导，从事工业五金及相关材料的批发和零售，包括（非危险）包装和装饰材料、五金紧固件、建筑材料、电气和照明用品、太阳能相关产品、电子产品、机械设备和汽车零部件。在法律允许的范围内，公司可以进行货物和技术的进出口（需要审批的项目在获得所需许可证后方可进行）。',
             feature_quality_title: '质量保证',
@@ -246,7 +248,7 @@ const i18n = {
             footer_quick_links: '快速链接',
             footer_categories: '分类',
             footer_follow: '关注我们',
-            footer_copyright: '© 2025 NaxiWell 工业。保留所有权利。',
+            footer_copyright: '© 2025 常州纽修威商贸。保留所有权利。',
 
             // Cart Modal
             cart_title: '您的询价购物车',
