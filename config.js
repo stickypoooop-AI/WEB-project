@@ -6,7 +6,7 @@ const config = {
     // Priority: window.ENV > hardcoded values
     supabase: {
         url: window.ENV?.SUPABASE_URL || 'https://zoxjvuafzkymgxmsluif.supabase.co',
-        anonKey: window.ENV?.SUPABASE_ANON_KEY || 'sb_publishable_hhkTjQk3DNoPByMWbUUWvg_u~fACZ7_'
+        anonKey: window.ENV?.SUPABASE_ANON_KEY || 'sb_publishable_hhkTjQk3DNoPByMWbUUWvg_u-fACZ7_'
     },
 
     // Admin Configuration
