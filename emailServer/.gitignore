@@ -1,0 +1,16 @@
+# Environment variables (contains sensitive SMTP credentials)
+.env
+.env.local
+.env.production
+
+# Dependencies
+vendor/
+node_modules/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+.vercel

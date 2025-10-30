@@ -18,3 +18,10 @@ Thumbs.db
 # Build outputs
 dist/
 build/
+
+# Backup files
+*.zip
+
+# EmailServer sensitive config
+emailServer/.env
+emailServer/.vercel
