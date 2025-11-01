@@ -485,6 +485,16 @@ function initializeEventListeners() {
     // Product Detail Modal
     document.getElementById('closeProduct').addEventListener('click', closeProductModal);
 
+    // Batch Product Upload Modal
+    document.getElementById('addProductBtnBatch').addEventListener('click', () => {
+        document.getElementById('xlsxToolModal').classList.add('active');
+    });
+    document.getElementById('closeProductBatch').addEventListener('click', closeProductBatch);
+
+    function closeProductBatch() {
+        document.getElementById('xlsxToolModal').classList.remove('active');
+    }
+
     // Quantity Controls
     document.getElementById('decreaseQty').addEventListener('click', () => {
         const input = document.getElementById('quantityInput');

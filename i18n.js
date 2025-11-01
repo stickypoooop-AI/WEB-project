@@ -126,6 +126,7 @@ const i18n = {
 
             admin_products_title: 'Product Management',
             admin_add_product: 'Add New Product',
+            admin_add_product_batch: 'Batch Add Products',
             admin_search_placeholder: 'Search products by name, category, material, size, price...',
             admin_table_image: 'Image',
             admin_table_name: 'Name',
@@ -298,6 +299,7 @@ const i18n = {
 
             admin_products_title: '产品管理',
             admin_add_product: '添加新产品',
+            admin_add_product_batch: '批量添加产品',
             admin_search_placeholder: '按名称、分类、材料、尺寸、价格搜索产品...',
             admin_table_image: '图片',
             admin_table_name: '名称',
