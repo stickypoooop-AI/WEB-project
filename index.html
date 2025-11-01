@@ -371,9 +371,14 @@
                 <div class="admin-section">
                     <div class="admin-section-header">
                         <h2 data-i18n="admin_products_title">Product Management</h2>
-                        <button class="btn btn-primary" id="addProductBtn">
-                            <i class="fas fa-plus"></i> <span data-i18n="admin_add_product">Add New Product</span>
-                        </button>
+                        <div>
+                            <button class="btn btn-primary" id="addProductBtnBatch">
+                                <i class="fas fa-plus"></i> <span data-i18n="admin_add_product_batch">Batch add new products</span>
+                            </button>
+                            <button class="btn btn-primary" id="addProductBtn">
+                                <i class="fas fa-plus"></i> <span data-i18n="admin_add_product">Add New Product</span>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Admin Search -->
@@ -509,6 +514,42 @@
         </div>
     </div>
 
+    <!-- XLSX Processing Tool Modal -->
+    <div id="xlsxToolModal" class="modal xlsx-tool-wrapper">
+      <div class="modal-content modal-large">
+          <div class="modal-header">
+              <h3 data-i18n="admin_add_product_batch">Add New Product</h3>
+              <button class="close-btn" id="closeProductBatch">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="xlsx-btn-group">
+              <button class="btn btn-primary" id="xlsxDownloadCategoryBtn">
+                下载分类名称
+              </button>
+              <button class="btn btn-primary" id="xlsxDownloadMaterialBtn">
+                下载材料名称
+              </button>
+              <button class="btn btn-primary" id="xlsxDownloadImportTemplateBtn">
+                 下载导入模板
+              </button>
+            </div>
+            <div class="xlsx-upload-area" onclick="document.getElementById('xlsxFileInput').click()">
+              <div class="xlsx-upload-icon">📁</div>
+              <p style="font-size: 18px; margin-bottom: 10px; font-weight: 500;">点击或拖拽上传 XLSX 文件</p>
+              <p style="color: #666; font-size: 14px;">支持 .xlsx 和 .xls 格式</p>
+              <input type="file" id="xlsxFileInput" accept=".xlsx,.xls">
+            </div>
+
+            <div id="xlsxMessage" style="height: 50px;line-height: 50px;"></div>
+            <div class="xlsx-btn-group">
+              <button class="btn btn-primary" id="xlsxProcessBtn" disabled>
+                处理文件
+              </button>
+            </div>
+          </div>
+     </div>
+    </div>
+
     <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- Optional Environment Variables (will be ignored if not found) -->
@@ -529,5 +570,9 @@
     <script src="mail.js"></script>
     <!-- Main Application Script -->
     <script src="script.js"></script>
+    <!-- SheetJS for Excel file processing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Batch Upload Script -->
+    <script src="upload.js"></script>
 </body>
 </html>
